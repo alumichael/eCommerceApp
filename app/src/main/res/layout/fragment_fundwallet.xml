@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/fund_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UserMain_Fragment.Fragment_FundWallet">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="8dp"
+        android:background="@drawable/sign_up_in_bg"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fund your Wallet"
+            android:textColor="@color/colorPrimary"
+            android:layout_margin="10dp"
+            android:fontFamily="@font/montserrat_semibold"
+            android:textSize="22sp"
+            />
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="4dp"
+        android:padding="@dimen/size_ten"
+        android:layout_margin="@dimen/size_eight"
+        android:layout_gravity="center"
+        >
+        <ScrollView
+            android:layout_width="match_parent"
+            android:scrollbars="vertical"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:padding="@dimen/size_ten"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_ten"
+                android:layout_marginLeft="@dimen/size_ten"
+                android:layout_marginRight="@dimen/size_ten"
+                >
+
+                <EditText
+                    android:id="@+id/amount_editxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Amount (₦)"
+                    android:textSize="15sp"
+                    android:inputType="number"
+                    android:fontFamily="@font/montserrat_regular"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutDescriptn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_ten"
+                android:layout_marginLeft="@dimen/size_ten"
+                android:layout_marginRight="@dimen/size_ten"
+                >
+
+                <EditText
+                    android:id="@+id/desc_editxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Description"
+                    android:textSize="15sp"
+                    android:inputType="text"
+                    android:fontFamily="@font/montserrat_regular"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+     <!--       <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutPin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_ten"
+                android:layout_marginLeft="@dimen/size_ten"
+                android:layout_marginRight="@dimen/size_ten"
+                >
+
+                <EditText
+                    android:id="@+id/pin_editxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="Wallet Pin"
+                    android:textSize="15sp"
+                    android:inputType="number"
+                    android:fontFamily="@font/montserrat_regular"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>-->
+
+
+            <Button
+                android:id="@+id/fund_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/size_fifteen"
+                android:background="@color/colorPrimary"
+                android:text="Fund Wallet"
+                android:textSize="16sp"
+                android:fontFamily="@font/montserrat_semibold"
+                android:textColor="@android:color/white"
+                android:visibility="visible" />
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/avi1"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_thirty"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:indicatorColor="@color/colorAccent"
+                app:indicatorName="BallSpinFadeLoaderIndicator" />
+
+
+          <!--  <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_horizontal"
+                    android:layout_marginEnd="@dimen/size_two"
+                    android:layout_marginStart="@dimen/size_eight"
+                    android:text="I don't have a Pin? "
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorGrey"
+                    android:layout_marginRight="@dimen/size_two"
+                    android:layout_marginLeft="@dimen/size_eight" />
+
+                <TextView
+                    android:id="@+id/set_pin_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
+                    android:gravity="center_horizontal"
+                    android:text="Click to Set Pin"
+                    android:textColorLink="@color/colorPrimary"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/colorPrimaryDark"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:gravity="center_horizontal"
+                    android:layout_marginEnd="@dimen/size_two"
+                    android:layout_marginStart="@dimen/size_eight"
+                    android:text="Forget Pin? "
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorGrey"
+                    android:layout_marginRight="@dimen/size_two"
+                    android:layout_marginLeft="@dimen/size_eight" />
+
+                <TextView
+                    android:id="@+id/reset_pin_txt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center_horizontal"
+                    android:text="Click to Reset Pin"
+                    android:textColorLink="@color/colorPrimary"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    />
+            </LinearLayout>-->
+
+
+
+
+        </LinearLayout>
+
+        </ScrollView>
+
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/dash_layout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".UserMain_Fragment.Fragment_Dashboard">
+
+    <ImageView
+        android:id="@+id/bg_curve"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sign_up_in_bg_dash"
+        />
+
+
+
+    <ScrollView
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:scrollbars="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="18dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/linear_wallet_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="18dp"
+            >
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Wallet Balance"
+                        android:layout_marginTop="4dp"
+                        android:textSize="17sp"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:textColor="@color/colorWhite"
+                         />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="3dp"
+
+                        >
+                        <ImageView
+                            android:layout_width="45dp"
+                            android:layout_height="45dp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_nigeria_naira_currency_symbol"
+                            />
+                        <TextView
+                            android:id="@+id/wallet_balance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="3dp"
+                            android:text="0000"
+                            android:textSize="33sp"
+                            android:fontFamily="@font/nunito_semibold"
+                            android:textColor="@color/colorWhite"
+                            android:gravity="center_vertical"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="3dp" />
+                        <TextView
+                            android:id="@+id/wallet_kobo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text=".00"
+                            android:textSize="10sp"
+                            android:fontFamily="@font/nunito_semibold"
+                            android:textColor="@color/colorWhite"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="start"
+                            android:visibility="visible"
+                            />
+
+                        <com.wang.avi.AVLoadingIndicatorView
+                            android:id="@+id/progressbar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/size_thirty_three"
+                            android:layout_gravity="end"
+                            android:layout_marginStart="10dp"
+                            android:visibility="gone"
+                            app:indicatorColor="@color/colorWhite"
+                            app:indicatorName="BallPulseIndicator"
+                            android:layout_marginLeft="10dp" />
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="1dp"/>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/fund_wallet_card"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                app:cardElevation="6dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/colorAccent"
+                app:cardCornerRadius="6dp"
+                android:padding="@dimen/size_thirteen"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_wallet"
+                        />
+
+                    <TextView
+                        android:id="@+id/fund_wallet_txt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Fund Wallet"
+                        android:layout_marginTop="2dp"
+                        android:linksClickable="true"
+                        android:textSize="20sp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:textColor="@color/colorPrimary"
+                        />
+
+
+                </LinearLayout>
+
+
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="@dimen/size_eight"
+            android:layout_marginTop="@dimen/size_twenty_seven"
+            android:layout_marginBottom="@dimen/size_fifteen"
+            >
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+
+
+                >
+
+                <com.daimajia.slider.library.SliderLayout
+                    android:id="@+id/slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+
+
+            </FrameLayout>
+
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/location_notify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/spinner_bg"
+            android:layout_marginBottom="6dp"
+            android:layout_marginTop="4dp"
+            app:cardElevation="@dimen/size_ten"
+            app:cardPreventCornerOverlap="true"
+            android:visibility="visible"
+            app:cardCornerRadius="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/location_note"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Hi Name, check SmartWash close to your area."
+                    android:textAlignment="textStart"
+                    android:textSize="16sp"
+                    android:layout_margin="@dimen/size_eight"
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="@font/nunito_regular"
+                    android:gravity="start" />
+
+                <Button
+                    android:id="@+id/location_notify_btn"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nearest Location"
+                    android:textSize="10sp"
+                    android:padding="4dp"
+                    android:layout_margin="4dp"
+                    android:textColor="@color/colorAccent"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:background="@drawable/spinner_bg"
+                    android:layout_gravity="center_vertical" />
+
+            </LinearLayout>
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="12dp"
+            android:scrollbars="vertical"
+            android:elevation="10dp"
+            android:visibility="visible"
+            tools:listitem="@layout/services_list"
+            />
+
+
+    </LinearLayout>
+
+
+    </ScrollView>
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avi1"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_forty_five"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:indicatorColor="@color/colorAccent"
+        app:indicatorName="BallSpinFadeLoaderIndicator" />
+
+
+
+    </FrameLayout>

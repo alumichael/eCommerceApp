@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            />
+
+        <LinearLayout
+            android:id="@+id/wk_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/colorWhite"
+            android:gravity="center_vertical"
+            android:layout_gravity="bottom|center_vertical|center_horizontal|center"
+            android:weightSum="2"
+            >
+
+            <LinearLayout
+                android:id="@+id/layoutDots"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal" />
+
+
+            <FrameLayout
+                android:id="@+id/signin_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:layout_weight="1"
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/status_bg"
+                    android:src="@drawable/rounded_white"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_margin="@dimen/size_ten"
+                    android:foregroundGravity="center"
+                    tools:ignore="Status" />
+
+
+                <ImageView
+                    android:id="@+id/arrow"
+                    app:srcCompat="@drawable/ic_arrow_forward_black_24dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/size_fifteen"
+                    android:foregroundGravity="center" />
+
+
+
+            </FrameLayout>
+
+
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+  <!--  <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_vertical|center_horizontal|center"
+        android:layout_marginBottom="@dimen/size_sixty"
+        android:gravity="center"
+        android:padding="@dimen/size_ten"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layoutDots"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dots_height"
+            android:layout_marginBottom="@dimen/dots_margin_bottom"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+        <Button
+            android:id="@+id/get_started_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_fifteen"
+            android:layout_marginRight="@dimen/size_fifteen"
+            android:background="@drawable/rounded_bg_color_btn"
+            android:text="@string/get_started"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white" />
+
+
+    </LinearLayout>-->
+
+
+
+
+
+</FrameLayout>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/product_layout"
+    android:layout_width="match_parent"
+    android:padding="@dimen/size_eight"
+    android:background="@color/colorWhite"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="@dimen/size_six"
+        android:layout_marginTop="@dimen/size_eight"
+        android:layout_marginBottom="@dimen/size_four"
+        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            >
+
+            <ImageView
+            android:id="@+id/quote_buy_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/smart_service"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0.9"
+                android:background="@color/colorPrimary"
+                android:gravity="bottom"
+                android:padding="4dp"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/product_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Executive Service"
+                    android:textSize="21sp"
+                    android:textColor="@color/colorWhite"
+                    android:fontFamily="@font/nunito_bold"/>
+
+
+                <TextView
+                    android:id="@+id/product_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="#200 per Cloth"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end"
+                    app:srcCompat="@drawable/ic_chevron_right_black_24dp"/>
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+
+
+    </com.google.android.material.card.MaterialCardView>
+    <TextView
+        android:id="@+id/dsc"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="8dp"
+        android:text="@string/executive_dsc"
+        android:textSize="15sp"
+        android:textColor="@color/colorDarkerGrey"
+        android:fontFamily="@font/nunito_regular"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDarkerGrey"
+        />
+
+
+</LinearLayout>

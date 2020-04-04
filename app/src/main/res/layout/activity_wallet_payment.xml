@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:fitsSystemWindows="true"
+        app:popupTheme="@style/MyPopupTheme"
+        android:elevation="4dp"
+        android:theme="@style/MyToolBarTheme"
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        app:titleTextColor="@color/colorWhite"
+        app:title="Payment">
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:text="Pay with Debit / Credit Card"
+            android:fontFamily="@font/nunito_bold"
+            android:textAlignment="center"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"/>
+
+        <ImageView
+            android:src="@drawable/visa"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            tools:ignore="ContentDescription" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="@dimen/size_ten">
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/size_six"
+                android:layout_marginTop="@dimen/size_six"
+                android:text="NGN 5000.00"
+                android:textColor="@color/colorDarkerGrey"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="@dimen/size_five"
+                android:background="@android:color/darker_gray"/>
+
+
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="@dimen/size_five"
+                android:background="@android:color/darker_gray"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutCardNo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <EditText
+                    android:id="@+id/edit_card_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_fifteen"
+                    android:hint="Card Number"
+                    android:drawableRight="@drawable/ic_payment_black_24dp"
+                    android:inputType="number"
+                    android:maxLength="20"
+                    android:drawableEnd="@drawable/ic_payment_black_24dp"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+                <Spinner
+                    android:id="@+id/mm_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"/>
+
+                <Spinner
+                    android:id="@+id/yy_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="1"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/inputLayoutCVV"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="5"
+                    android:layout_marginLeft="@dimen/size_six"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/size_six">
+
+                    <EditText
+                        android:id="@+id/cvv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="CVV"
+                        android:inputType="number"
+                        android:maxLength="4"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/pay_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_six"
+                android:background="@color/colorPrimary"
+                android:text="Pay Securely"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"/>
+
+            <com.wang.avi.AVLoadingIndicatorView
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_thirty"
+                android:layout_gravity="end"
+                android:visibility="gone"
+                app:indicatorColor="@color/colorPrimary"
+                app:indicatorName="BallSpinFadeLoaderIndicator" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:src="@drawable/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_ten"
+            android:layout_marginRight="@dimen/size_ten"
+            tools:ignore="ContentDescription"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

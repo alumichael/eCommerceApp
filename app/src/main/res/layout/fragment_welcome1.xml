@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sw_walkthrough1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="70dp"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="At SmartWash! \nWe have you covered."
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="@dimen/size_thirty_two"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You can order for our services, and we promise \nto serve you better."
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/nunito_regular"
+            android:textSize="@dimen/size_eighteen"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical"
+
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SmartWash"
+            android:textColor="@color/colorPrimary"
+            android:fontFamily="@font/nunito_bold"
+            android:textSize="@dimen/size_twenty_five"
+            android:layout_marginTop="22dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="We pick up your dirty laundry and deliver clean laundry back base on type of services ordered.\n\n AT YOUR SERVICE ALWAYS !"
+            android:textColor="@color/colorAccent"
+            android:fontFamily="@font/nunito_regular"
+            android:textSize="@dimen/size_fifteen"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp" />
+
+    </LinearLayout>
+
+
+</FrameLayout>

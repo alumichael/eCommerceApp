@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserMain_Fragment.Fragment_Transactions">
+
+    <ImageView
+        android:id="@+id/bg_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sign_up_in_bg" />
+
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/progressbar_trans"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_twenty_eight"
+        android:layout_gravity="center"
+        android:visibility="visible"
+        app:indicatorColor="@color/colorAccent"
+        app:indicatorName="BallPulseSyncIndicator"
+        tools:ignore="RtlHardcoded" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_payment_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layoutManager="LinearLayoutManager" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

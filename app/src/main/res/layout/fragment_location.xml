@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/map_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UserMain_Fragment.Fragment_Locations">
+
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <!--<com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            map:cardCornerRadius="2dp"
+            android:background="@color/colorWhite"
+            android:layout_gravity="bottom">
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Corporate Head Office"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorPrimary"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="17, Adetokunbo Ademola Street, Victoria Island, Lagos, Nigeria.\nContact Number: 07000STIPLC"
+                        android:textSize="14sp"
+                        android:textColor="@color/colorGrey"/>
+
+                </LinearLayout>
+            </ScrollView>
+
+
+        </com.google.android.material.card.MaterialCardView>-->
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:progress="20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:indeterminate="false"
+            />
+
+    </FrameLayout>
+
+
+</LinearLayout>
