@@ -35,18 +35,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Executive Service"
-            android:textSize="23sp"
+            android:textSize="21sp"
             android:textColor="@color/colorAccent"
-            android:textStyle="bold"
+            android:fontFamily="@font/nunito_semibold"
             />
 
         <TextView
             android:id="@+id/price_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:layout_gravity="end"
+            android:textSize="15sp"
             android:textColor="@color/colorWhite"
+            android:fontFamily="@font/nunito_regular"
             android:text="NGN 300 per Cloth"
             />
 
@@ -65,6 +65,12 @@
     android:layout_height="0dp"
     android:layout_weight="1">
 
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -72,18 +78,11 @@
         android:layout_gravity="center_vertical"
         android:layout_marginTop="12dp"
         android:scrollbars="vertical"
-        android:visibility="invisible"
         tools:listitem="@layout/cloth_list"
         />
 
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/avi1"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_forty_five"
-        android:layout_gravity="center"
-        android:visibility="visible"
-        app:indicatorColor="@color/colorAccent"
-        app:indicatorName="BallSpinFadeLoaderIndicator" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 </FrameLayout>
 
@@ -93,99 +92,31 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="5dp"
-        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:background="@color/colorWhite"
         >
-       <!-- <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/basket_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Total in Basket: "
-                    android:textSize="17sp"
-                    android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    android:layout_marginRight="4dp"
-                    />
-                <TextView
-                    android:id="@+id/basket_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0"
-                    android:textSize="17sp"
-                    android:textColor="@color/colorWhite"
-                    android:textStyle="bold"
-                    />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
-                <TextView
-                    android:id="@+id/total_price_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorWhite"
-                    android:text="Total Price:"
-                    android:layout_marginRight="4dp"
-                    />
-                <TextView
-                    android:id="@+id/total_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:textColor="@color/colorWhite"
-                    android:text="NGN 0"
-                    />
-
-            </LinearLayout>
-
-        </LinearLayout>-->
-
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/add_more_service"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Add Other Service"
-                android:padding="2dp"
-                android:layout_margin="2dp"
-                android:textColor="@color/colorAccent"
-                android:background="@drawable/rounded_corner_bg"
-                android:drawableRight="@drawable/ic_add_circle_outline_black_24dp"
-
-                />
-
-            <Button
                 android:id="@+id/checkout"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
                 android:text="Checkout"
-                android:layout_margin="2dp"
+                android:layout_margin="8dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:padding="2dp"
                 android:textColor="@color/colorAccent"
-                android:background="@drawable/spinner_bg"
-                android:drawableRight="@drawable/ic_check_circle_black_24dp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:fontFamily="@font/nunito_bold"
+                android:background="@drawable/rounded_white"
 
                 />
 

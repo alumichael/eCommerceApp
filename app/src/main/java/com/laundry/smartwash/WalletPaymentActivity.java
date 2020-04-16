@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,9 +18,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.laundry.smartwash.Model.Errors.APIError;
 import com.laundry.smartwash.Model.Errors.ErrorUtils;
+import com.laundry.smartwash.Model.Message;
+import com.laundry.smartwash.Model.OnlyIDAmountRequest;
+import com.laundry.smartwash.Model.OnlyIDRequest;
+import com.laundry.smartwash.Model.Transaction.VerifyTransact;
+import com.laundry.smartwash.Model.Transaction.newTransact;
+import com.laundry.smartwash.Model.Wallet.fetchWallet;
 import com.laundry.smartwash.retrofit_interface.ApiInterface;
 import com.laundry.smartwash.retrofit_interface.ServiceGenerator;
 
@@ -30,6 +38,7 @@ import org.json.JSONException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +56,9 @@ public class WalletPaymentActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolBar;
+
+    @BindView(R.id.payment_layout)
+    LinearLayout payment_layout;
 
     @BindView(R.id.inputLayoutCardNo)
     TextInputLayout inputLayoutCardNo;
@@ -75,6 +87,7 @@ public class WalletPaymentActivity extends AppCompatActivity {
 
     private UserPreferences userPreferences;
     NetworkConnection networkConnection = new NetworkConnection();
+    ApiInterface client = ServiceGenerator.createService(ApiInterface.class);
 
     @BindView(R.id.amount)
     TextView mAmount;
@@ -82,30 +95,38 @@ public class WalletPaymentActivity extends AppCompatActivity {
 
     String amount = "", desc = "";
     String provider_ref = "";
+    String transact_ref="";
+    String status;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_payment);
         ButterKnife.bind(this);
+
+        PaystackSdk.initialize(getApplicationContext());
+
         userPreferences = new UserPreferences(this);
         applyToolbarChildren("Fund Wallet");
 
 
         Intent intent = getIntent();
         amount = intent.getStringExtra(Constant.WALLET_AMOUNT_FUNDING);
-        desc = intent.getStringExtra(Constant.WALLET_DESC);
+        //desc = intent.getStringExtra(Constant.WALLET_DESC);
 
         NumberFormat nf = NumberFormat.getNumberInstance(new Locale("en", "US"));
         nf.setMaximumFractionDigits(2);
         DecimalFormat df = (DecimalFormat) nf;
         String v_price = df.format(Double.valueOf(amount));
 
+        Random random=new Random();
+        transact_ref= String.valueOf(random.nextInt());
+
 
         String amt = getString(R.string.naira_currency) + " " + v_price;
         //desc = getString(R.string.desc) + ": " + desc;
         mAmount.setText(amt);
-        //mPolicyNum.setText(desc);
+
 
         mm();
         yy();
@@ -165,7 +186,7 @@ public class WalletPaymentActivity extends AppCompatActivity {
 
                                 charge.setAmount(cost * 100);
                                 charge.setEmail(userPreferences.getUserEmail());
-                                charge.setReference(userPreferences.getCustomerId());
+                                charge.setReference(transact_ref);
 
 
                                 PaystackSdk.chargeCard(WalletPaymentActivity.this, charge, new Paystack.TransactionCallback() {
@@ -236,17 +257,121 @@ public class WalletPaymentActivity extends AppCompatActivity {
 
     private void sendData(String transRef) {
 
+        newTransact transact=new newTransact(userPreferences.getCustomerId(),transRef,
+                "Credit Wallet", Integer.parseInt(amount));
 
-        //To create retrofit instance
-        //get client and call object for request
+        Call<Message> new_transact = client.create_transact(transact);
 
-        ApiInterface client = ServiceGenerator.createService(ApiInterface.class);
-        Call<ResponseBody> call = client.credit_wallet(userPreferences.getCustomerId(), Integer.parseInt(amount));
-
-
-        call.enqueue(new Callback<ResponseBody>() {
+        new_transact.enqueue(new Callback<Message>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Message> new_transact, Response<Message> response) {
+                if (!response.isSuccessful()) {
+
+                    try {
+                        APIError apiError = ErrorUtils.parseError(response);
+                        showShortMsg("Invalid Entry: " + apiError.getErrors());
+                        Log.i("Invalid EntryK", apiError.getErrors().toString());
+                        Log.i("Invalid Entry", response.errorBody().toString());
+
+                    } catch (Exception e) {
+                        Log.i("InvalidEntry", e.getMessage());
+                        showShortMsg("Invalid Entry");
+
+                    }
+
+                    return;
+                }
+
+               status=response.body().getStatus();
+                if(status.equals("success")){
+                    verifyPayment(transRef);
+                }else{
+                    showShortMsg("Transaction Failed, Please contact us.");
+                    payButton.setVisibility(View.VISIBLE);
+                    mProgress.setVisibility(View.GONE);
+                }
+
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Message> new_transact, Throwable t) {
+                showShortMsg("Login Failed " + t.getMessage());
+                Log.i("GEtError", t.getMessage());
+                payButton.setVisibility(View.VISIBLE);
+                mProgress.setVisibility(View.GONE);
+
+            }
+        });
+
+
+
+
+
+
+
+
+    }
+    
+    
+  
+        private  void verifyPayment(String transref){
+
+            VerifyTransact verifyTransact=new VerifyTransact(userPreferences.getCustomerId(), transref);
+
+            Call<Message> verify_transact = client.verify_transact(verifyTransact);
+            verify_transact.enqueue(new Callback<Message>() {
+                @Override
+                public void onResponse(Call<Message> verify_transact, Response<Message> response) {
+                    if (!response.isSuccessful()) {
+
+                        try {
+                            APIError apiError = ErrorUtils.parseError(response);
+                            showShortMsg("Invalid Entry: " + apiError.getErrors());
+                            Log.i("Invalid EntryK", apiError.getErrors().toString());
+                            Log.i("Invalid Entry", response.errorBody().toString());
+
+                        } catch (Exception e) {
+                            Log.i("InvalidEntry", e.getMessage());
+                            showShortMsg("Invalid Entry");
+
+                        }
+
+                        return;
+                    }
+
+                    status=response.body().getStatus();
+                    if(status.equals("success")){
+                        creditWallet();
+                    }else{
+                        showShortMsg("Transaction Failed, Please contact us.");
+                        payButton.setVisibility(View.VISIBLE);
+                        mProgress.setVisibility(View.GONE);
+                    }
+
+                }
+
+                @Override
+                public void onFailure(Call<Message> verify_transact, Throwable t) {
+                    showShortMsg("Login Failed " + t.getMessage());
+                    Log.i("GEtError", t.getMessage());
+                    payButton.setVisibility(View.VISIBLE);
+                    mProgress.setVisibility(View.GONE);
+
+                }
+            });
+        }
+
+
+    private  void creditWallet(){
+        OnlyIDAmountRequest onlyIDAmountRequest=new OnlyIDAmountRequest(userPreferences.getCustomerId(), Integer.parseInt(amount));
+        Call<Message> creditWallet = client.credit_wallet(onlyIDAmountRequest);
+        creditWallet.enqueue(new Callback<Message>() {
+            @Override
+            public void onResponse(Call<Message> creditWallet, Response<Message> response) {
                 if (!response.isSuccessful()) {
 
                     try {
@@ -264,24 +389,86 @@ public class WalletPaymentActivity extends AppCompatActivity {
                     return;
                 }
                 try {
-                    //avi1.setVisibility(View.GONE);
-                    gotoDashboard();
+
+                    refreshWallet();
+
+
                 } catch (Exception e) {
-                    showShortMsg("Failed to Save Balance");
+                    showShortMsg("Error occured !");
                 }
 
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<Message> creditWallet, Throwable t) {
                 showShortMsg("Login Failed " + t.getMessage());
                 Log.i("GEtError", t.getMessage());
 
             }
         });
-
-
     }
+
+
+    private  void refreshWallet(){
+
+        Call<fetchWallet> refreshWallet = client.fetch_wallet(new OnlyIDRequest(userPreferences.getCustomerId()));
+        refreshWallet.enqueue(new Callback<fetchWallet>() {
+            @Override
+            public void onResponse(Call<fetchWallet> creditWallet, Response<fetchWallet> response) {
+                if (!response.isSuccessful()) {
+
+                    try {
+                        APIError apiError = ErrorUtils.parseError(response);
+                        showShortMsg("Invalid Entry: " + apiError.getErrors());
+                        Log.i("Invalid EntryK", apiError.getErrors().toString());
+                        Log.i("Invalid Entry", response.errorBody().toString());
+
+                    } catch (Exception e) {
+                        Log.i("InvalidEntry", e.getMessage());
+                        showShortMsg("Invalid Entry");
+
+                    }
+
+                    return;
+                }
+                try {
+                    String status = response.body().getStatus();
+                    if(status.equals("success")) {
+
+                        String wallet_balance = response.body().fetchGetData().getAmount();
+                        userPreferences.setWalletBalance(wallet_balance);
+                        gotoDashboard();
+
+
+                    }else {
+                        String message=response.body().getMessage();
+                        showShortMsg(message);
+                        payButton.setVisibility(View.VISIBLE);
+                        mProgress.setVisibility(View.GONE);
+                    }
+
+
+                } catch (Exception e) {
+                    showShortMsg("Error occured !");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<fetchWallet> creditWallet, Throwable t) {
+                showShortMsg("Login Failed " + t.getMessage());
+                Log.i("GEtError", t.getMessage());
+                payButton.setVisibility(View.VISIBLE);
+                mProgress.setVisibility(View.GONE);
+
+            }
+        });
+    }
+
+
+
+
+
 
     private void applyToolbarChildren(String title) {
         setSupportActionBar(toolBar);
@@ -355,7 +542,7 @@ public class WalletPaymentActivity extends AppCompatActivity {
 
 
     private void showShortMsg(String s) {
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+        Snackbar.make(payment_layout, s, Snackbar.LENGTH_LONG).show();
     }
 
     private void dialogMessage(String s) {
@@ -375,7 +562,7 @@ public class WalletPaymentActivity extends AppCompatActivity {
     private void gotoDashboard() {
         startActivity(new Intent(WalletPaymentActivity.this, MainActivity.class));
         this.finish();
-        Toast.makeText(getApplicationContext(), "Transaction Successful, Check Your Wallet", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Finalized Transaction", Toast.LENGTH_LONG).show();
 
 
     }

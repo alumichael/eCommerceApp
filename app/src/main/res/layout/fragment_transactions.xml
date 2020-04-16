@@ -1,28 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/transaction_history_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserMain_Fragment.Fragment_Transactions">
+    android:padding="10dp"
+    android:background="@drawable/sign_up_in_bg"
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/bg_img"
+    <LinearLayout
+        android:id="@+id/not_found_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/sign_up_in_bg" />
-
-
-    <com.wang.avi.AVLoadingIndicatorView
-        android:id="@+id/progressbar_trans"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/size_twenty_eight"
+        android:gravity="center"
         android:layout_gravity="center"
-        android:visibility="visible"
-        app:indicatorColor="@color/colorAccent"
-        app:indicatorName="BallPulseSyncIndicator"
-        tools:ignore="RtlHardcoded" />
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:src="@drawable/img_empty" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp"
+            android:fontFamily="@font/montserrat_regular"
+            android:text="No transaction found"
+            android:textAlignment="center"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
@@ -32,7 +45,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_payment_history"
+            android:id="@+id/recycler_transaction"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager" />
@@ -40,4 +53,5 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>

@@ -181,8 +181,8 @@ public class Fragment_Locations extends Fragment implements OnMapReadyCallback, 
         if (networkConnection.isNetworkConnected(getContext() )) {
 
             // Add a marker in Sydney and move the camera
-            LatLng head_office = new LatLng(6.432679, 3.430890);
-            mMap.addMarker(new MarkerOptions().position(head_office).title("Corporate Head Office"));
+            LatLng head_office = new LatLng(7.250309, 5.184201);
+            mMap.addMarker(new MarkerOptions().position(head_office).title("Head Office"));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(head_office));
 
             CameraPosition cameraPosition = new CameraPosition.Builder()

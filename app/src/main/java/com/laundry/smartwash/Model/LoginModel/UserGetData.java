@@ -34,6 +34,13 @@ public class UserGetData implements Serializable
     @Expose
     private String role;
 
+    @SerializedName("wallet")
+    @Expose
+    private Wallet wallet;
+
+    public Wallet getWallet() {
+        return wallet;
+    }
 
     public String getId() {
         return id;

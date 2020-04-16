@@ -115,6 +115,10 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
     Button mLocationNotifyBtn;
     @BindView(R.id.location_note)
     TextView mLocationNote;
+
+    @BindView(R.id.check_status)
+    TextView mCheckStatus;
+
     @BindView(R.id.location_notify)
     MaterialCardView mLocationNotify;
 
@@ -169,8 +173,21 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
         ButterKnife.bind(this, view);
         userPreferences = new UserPreferences(getActivity());
         username=userPreferences.getFullName();
+        balance=userPreferences.getWalletBalance();
 
-        String full_note = "Hi! " + username + ", SmartWash is currently operating in this state.";
+
+
+
+        NumberFormat nf = NumberFormat.getNumberInstance(new Locale("en", "US"));
+        nf.setMaximumFractionDigits(2);
+        DecimalFormat df = (DecimalFormat) nf;
+        String v_price = df.format(Double.valueOf(balance));
+
+
+        wallet_balance.setText(v_price);
+        //wallet_kobo.setVisibility(View.VISIBLE);
+
+        String full_note = "Hi! " + username + ", SmartWash is currently operating near you.";
         mLocationNote.setText(full_note);
         
         //setWallet_balance();
@@ -194,11 +211,11 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
     }
 
     private void setAction() {
-        // wallet_blance_ServiceCard.setOnClickListener(this);
+        mCheckStatus.setOnClickListener(this);
         fund_wallet_ServiceCard.setOnClickListener(this);
     }
 
-    private void setWallet_balance() {
+   /* private void setWallet_balance() {
         //get client and call object for request
         progressbar.setVisibility(View.VISIBLE);
         wallet_kobo.setVisibility(View.GONE);
@@ -242,7 +259,7 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
 
     }
 
-
+*/
 
 
     private void getServices() {
@@ -391,8 +408,11 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
                 showFragment(fragment);
 
                 break;
-           /* case R.id.wallet_blance_ServiceCard:
-                break;*/
+            case R.id.check_status:
+                fragment = new Fragment_Status();
+                showFragment(fragment);
+
+                break;
         }
     }
 

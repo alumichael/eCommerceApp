@@ -15,11 +15,42 @@ public class ClothGetData implements Serializable
     @Expose
     private String clothName;
 
+    @SerializedName("cloth_amount")
+    @Expose
+    private String clothAmount;
+
+
+
+    @SerializedName("quantity")
+    @Expose
+    private int quantity;
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
     public String getClothId() {
         return clothId;
     }
 
     public String getClothName() {
         return clothName;
+    }
+    public String getClothAmount() {
+        return clothAmount;
+    }
+
+
+    public void setClothName(String clothName) {
+        this.clothName = clothName;
+    }
+
+    public void setClothAmount(String clothAmount) {
+        this.clothAmount = clothAmount;
     }
 }

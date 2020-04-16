@@ -38,5 +38,7 @@ public class ClothGetObj implements Serializable
         return data;
     }
 
-
+    public void setData(List<ClothGetData> data) {
+        this.data = data;
+    }
 }

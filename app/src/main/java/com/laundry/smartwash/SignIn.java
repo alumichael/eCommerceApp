@@ -68,6 +68,9 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
     String id ;
     String phone_no ;
     String role;
+    String address;
+    String wallet_balance;
+    String message;
 
 
     NetworkConnection networkConnection=new NetworkConnection();
@@ -82,6 +85,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
 
         mForgetPass.setPaintFlags(mForgetPass.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         mForgetPass.setText("Forgot Password ?");
+        mForgetPass.setVisibility(View.GONE);
 
         userPreferences = new UserPreferences(this);
 
@@ -241,46 +245,53 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                             return;
                         }
 
-                        email = String.valueOf(response.body().getUser().getEmail());
-                        fullname = String.valueOf(response.body().getUser().getFullname());
-                        uniqueID = String.valueOf(response.body().getUser().getUnique_id());
-                        id = response.body().getUser().getId();
-                        phone_no = response.body().getUser().getPhone();
-                        role = response.body().getUser().getRole();
-                        try {
-                            userPreferences.setUserEmail(email);
-                            userPreferences.setFullName(fullname);
-                            userPreferences.setCustomerId(uniqueID);
-                            userPreferences.setID(id);
-                            userPreferences.setPhone(phone_no);
-                            userPreferences.setRole(role);
 
-                            if(response.code()==200){
+                        if(response.code()==200) {
 
-                                mSigninBtn.setVisibility(View.VISIBLE);
-                                mAvi1.setVisibility(View.GONE);
-                                if (email != null) {
-                                    Intent intent = new Intent(SignIn.this, MainActivity.class);
-                                    startActivity(intent);
-                                    finish();
-                                } else {
-                                    showMessage("Error: " + response.body());
+                            String status=response.body().getStatus();
+                            if(status.equals("success")) {
+                                email = String.valueOf(response.body().getUser().getEmail());
+                                fullname = String.valueOf(response.body().getUser().getFullname());
+                                uniqueID = String.valueOf(response.body().getUser().getUnique_id());
+                                id = response.body().getUser().getId();
+                                phone_no = response.body().getUser().getPhone();
+                                role = response.body().getUser().getRole();
+                                address = response.body().getUser().getAddress();
+                                wallet_balance = response.body().getUser().getWallet().getAmount();
+                                try {
+                                    userPreferences.setUserEmail(email);
+                                    userPreferences.setFullName(fullname);
+                                    userPreferences.setCustomerId(uniqueID);
+                                    userPreferences.setID(id);
+                                    userPreferences.setPhone(phone_no);
+                                    userPreferences.setRole(role);
+                                    userPreferences.setWalletBalance(wallet_balance);
+                                    userPreferences.setUserAddr1(address);
+
+
+                                    mSigninBtn.setVisibility(View.VISIBLE);
+                                    mAvi1.setVisibility(View.GONE);
+                                    if (email != null) {
+                                        Intent intent = new Intent(SignIn.this, MainActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+
+                                    mSigninBtn.setVisibility(View.VISIBLE);
+                                    mAvi1.setVisibility(View.GONE);
+
+
+                                } catch (Exception e) {
+                                    Log.i("PrefError", e.getMessage());
+                                    mSigninBtn.setVisibility(View.VISIBLE);
+                                    mAvi1.setVisibility(View.GONE);
                                 }
 
+                            }else{
+                                message=response.body().getMessage();
+                                showMessage(message);
                             }
-
-                            mSigninBtn.setVisibility(View.VISIBLE);
-                            mAvi1.setVisibility(View.GONE);
-
-
-
-
-                        }catch (Exception e){
-                            Log.i("PrefError", e.getMessage());
-                            mSigninBtn.setVisibility(View.VISIBLE);
-                            mAvi1.setVisibility(View.GONE);
                         }
-
 
                     } catch (Exception e) {
                         showMessage("Login Failed: " + e.getMessage());
@@ -292,7 +303,12 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
 
                 @Override
                 public void onFailure(Call<UserGetObj> call, Throwable t) {
-                    showMessage("Login Failed " + t.getMessage());
+                    if(message!=null){
+                        showMessage(message);
+                    }else{
+                        showMessage("Login Failed");
+                    }
+
                     Log.i("GEtError", t.getMessage());
                     mSigninBtn.setVisibility(View.VISIBLE);
                     mAvi1.setVisibility(View.GONE);

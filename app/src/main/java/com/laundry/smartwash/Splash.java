@@ -26,8 +26,8 @@ public class Splash extends AppCompatActivity {
 
     @BindView(R.id.txt_desc)
     TextView txtDesc;
-    @BindView(R.id.txt_version)
-    TextView txtVersion;
+  /*  @BindView(R.id.txt_version)
+    TextView txtVersion;*/
 
 
     // Animation
@@ -52,13 +52,13 @@ public class Splash extends AppCompatActivity {
         //UserPreferences userPreferences = new UserPreferences(this);
 
 //        Display app version on the Screen
-        try{
+       /* try{
             PackageInfo packageInfo = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
             String version = "v" + packageInfo.versionName;
             txtVersion.setText(version);
         }catch (PackageManager.NameNotFoundException e){
             e.printStackTrace();
-        }
+        }*/
 
 //        check for first time launch
 
@@ -73,7 +73,7 @@ public class Splash extends AppCompatActivity {
             imgLogo.startAnimation(slide_front_left);
 
             txtDesc.startAnimation(blink);
-            txtVersion.startAnimation(blink);
+            //txtVersion.startAnimation(blink);
 
 
 

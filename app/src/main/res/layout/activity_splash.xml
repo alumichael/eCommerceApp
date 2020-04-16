@@ -35,31 +35,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="SmartWash"
-                android:fontFamily="@font/nunito_black"
+                android:fontFamily="@font/nunito_bold"
                 android:textColor="@color/colorPrimary"
                 android:textAlignment="center"
                 android:textSize="21sp"
                 />
 
-            <TextView
-                android:id="@+id/txt_version"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:fontFamily="cursive"
-                android:text="v1.0"
-                android:textSize="17sp"
-                android:textColor="@color/colorPrimary" />
+
 
         </LinearLayout>
 
 
 
-        <View
+
+      <!--  <View
             android:layout_width="match_parent"
             android:layout_height="15dp"
             android:background="@color/colorPrimaryDark"
-            />
+            />-->
 
     </LinearLayout>
 

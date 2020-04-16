@@ -34,9 +34,11 @@ public class Constant {
 
     //User Parameters
     public static final String ROLE = "role";
+    public static final String WALLET_BALANCE = "wallet_balance";
     public static final String PHONE = "phone";
     public static final String TOTAL_AMT = "total_amount";
     public static final String CUSTOMER_ID = "customer_id";
+    public static final String ACKNWOLEDGE = "acknowledge";
     public static final String NAME = "name";
     public static final String EMAIL = "email";
     public static final String ADDR1 = "address_1";
@@ -60,6 +62,8 @@ public class Constant {
     public static final String CART_ID = "cart_id";
     public static final String CART_SIZE = "cart_size";
     public static final String SHIPPING_COST = "shippingCost";
+
+    public static final String TOTAL_PRICE = "total_price";
 
     public static final String CARD_TITLE = "card_title";
 

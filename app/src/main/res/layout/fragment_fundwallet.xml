@@ -70,25 +70,36 @@
 
 
 
-            <com.google.android.material.textfield.TextInputLayout
+           <!-- <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/inputLayoutDescriptn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_ten"
                 android:layout_marginLeft="@dimen/size_ten"
                 android:layout_marginRight="@dimen/size_ten"
+                android:clickable="false"
                 >
 
                 <EditText
                     android:id="@+id/desc_editxt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:hint="Description"
+                    android:hint="CREDIT WALLET"
                     android:textSize="15sp"
                     android:inputType="text"
                     android:fontFamily="@font/montserrat_regular"
                     />
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CREDIT WALLET"
+                android:layout_marginTop="@dimen/size_ten"
+                android:layout_marginLeft="@dimen/size_ten"
+                android:layout_marginRight="@dimen/size_ten"
+
+                />
 
 
      <!--       <com.google.android.material.textfield.TextInputLayout

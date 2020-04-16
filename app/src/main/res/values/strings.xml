@@ -14,5 +14,11 @@
     <string name="title_activity_maps">Map</string>
     <string name="naira_currency">NGN</string>
 
+    <string-array name="status_array">
+        <item> All Order </item>
+        <item> Pending Order </item>
+        <item> Delivered Order </item>
+        <item> Received Order </item>
 
+    </string-array>
 </resources>

@@ -217,6 +217,21 @@ public class UserPreferences {
 
 
 
+
+
+
+    public void setWalletBalance(String role) {
+        editor.putString(Constant.WALLET_BALANCE, role);
+        editor.apply();
+    }
+
+    public String getWalletBalance() {
+        return sharedPreferences.getString(Constant.WALLET_BALANCE, "");
+    }
+
+
+
+
     public void setID(String id) {
         editor.putString(Constant.ID, id);
         editor.apply();
@@ -378,6 +393,28 @@ public class UserPreferences {
 
     public int getTotalPicked() {
         return sharedPreferences.getInt(Constant.TOTAL_COUNT, 0);
+    }
+
+
+
+
+    public void setCategory(String category) {
+        editor.putString(Constant.CATE_NAME, category);
+        editor.apply();
+    }
+
+    public String getCategory() {
+        return sharedPreferences.getString(Constant.CATE_NAME, "");
+    }
+
+
+    public void setTotalPrice(int total_price) {
+        editor.putInt(Constant.TOTAL_PRICE, total_price);
+        editor.apply();
+    }
+
+    public int getTotalPrice() {
+        return sharedPreferences.getInt(Constant.TOTAL_PRICE, 0);
     }
    
 

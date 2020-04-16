@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.laundry.smartwash.Model.Errors.APIError;
 import com.laundry.smartwash.Model.Errors.ErrorUtils;
+import com.laundry.smartwash.Model.Message;
 import com.laundry.smartwash.Model.Register.RegisterGetObj;
 import com.laundry.smartwash.Model.Register.RegisterUserPost;
 import com.laundry.smartwash.Model.Wallet.createWallet;
@@ -76,6 +77,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
     /** ButterKnife Code **/
 
     NetworkConnection networkConnection=new NetworkConnection();
+    String message;
 
 
     @Override
@@ -214,11 +216,11 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
         //get client and call object for request
         ApiInterface client = ServiceGenerator.createService(ApiInterface.class);
 
-        Call<ResponseBody> call=client.register(regPostData);
+        Call<Message> call=client.register(regPostData);
 
-        call.enqueue(new Callback<ResponseBody>() {
+        call.enqueue(new Callback<Message>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(Call<Message> call, Response<Message> response) {
 
                 if(response.code()==400){
                     showMessage("Check your internet connection");
@@ -269,11 +271,18 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
 
                     if(response.code()==200){
 
-                        showMessage("Successfully Registered");
-                        Intent intent = new Intent(SignUp.this, SignIn.class);
-                        intent.putExtra(Constant.EMAIL, mEmailEditxt.getText().toString());
-                        startActivity(intent);
-                        SignUp.this.finish();
+                        String status=response.body().getStatus();
+
+                        if(status.equals("success")) {
+                            showMessage("Successfully Registered");
+                            Intent intent = new Intent(SignUp.this, SignIn.class);
+                            intent.putExtra(Constant.EMAIL, mEmailEditxt.getText().toString());
+                            startActivity(intent);
+                            SignUp.this.finish();
+                        }else {
+                            message=response.body().getMessage();
+                            showMessage(message);
+                        }
 
 
                     }
@@ -290,8 +299,12 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener{
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                showMessage("Registration Failed: "+t.getMessage());
+            public void onFailure(Call<Message> call, Throwable t) {
+                if(message!=null){
+                    showMessage(message);
+                }else{
+                    showMessage("Registration Failed");
+                }
                 Log.i("GEtError",t.getMessage());
                 mSignupBtn.setVisibility(View.VISIBLE);
                 mAvi1.setVisibility(View.GONE);

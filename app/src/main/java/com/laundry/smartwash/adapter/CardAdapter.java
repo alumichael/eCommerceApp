@@ -61,7 +61,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
 
             switch (serviceList.get(pos).getCateName()){
                 case "Executive Wash":
-                case "SmartWash Liquid Soap":
+                case "Smartwash Liquid Soup":
                 case "General Wash":
                 case "Family Wash":
                 case "Express Wash":
@@ -69,9 +69,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
                     nextActivity(serviceList.get(pos).getCateName(),serviceList.get(pos).getCatePrice(), serviceForm.class);
                     break;
 
+
+
+
                 default:
                     Toast.makeText(context, "Not Valid Service",Toast.LENGTH_LONG).show();
                     break;
+
+
 
 
             }

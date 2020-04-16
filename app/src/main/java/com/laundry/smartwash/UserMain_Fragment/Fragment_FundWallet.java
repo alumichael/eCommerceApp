@@ -52,10 +52,10 @@ public class Fragment_FundWallet extends Fragment {
     TextInputLayout inputLayoutAmount;
     @BindView(R.id.amount_editxt)
     EditText amountEditxt;
-    @BindView(R.id.inputLayoutDescriptn)
+/*    @BindView(R.id.inputLayoutDescriptn)
     TextInputLayout inputLayoutDescriptn;
     @BindView(R.id.desc_editxt)
-    EditText descEditxt;
+    EditText descEditxt;*/
 
    /* @BindView(R.id.inputLayoutPin)
     TextInputLayout inputLayoutPin;
@@ -156,7 +156,7 @@ public class Fragment_FundWallet extends Fragment {
 
                 //Do debit operation on Paystack and fund wallet API
                 //Post Request to Api
-                launchWalletPayment(amountEditxt.getText().toString(),descEditxt.getText().toString());
+                launchWalletPayment(amountEditxt.getText().toString());
                 //sendData(amountEditxt.getText().toString(),descEditxt.getText().toString());
             }
 
@@ -165,10 +165,9 @@ public class Fragment_FundWallet extends Fragment {
         showMessage("No Internet connection discovered!");
     }
 
-    private void launchWalletPayment(String amount, String desc) {
+    private void launchWalletPayment(String amount) {
         Intent intent = new Intent(getContext(), WalletPaymentActivity.class);
         intent.putExtra(Constant.WALLET_AMOUNT_FUNDING, amount);
-        intent.putExtra(Constant.WALLET_DESC, desc);
         startActivity(intent);
         getActivity().finish();
     }

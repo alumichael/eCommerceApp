@@ -3,7 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
+    <item
+        android:id="@+id/refresh"
+        android:orderInCategory="99"
+        android:icon="@drawable/ic_refresh_black_24dp"
+        android:title="Refresh"
+        android:fontFamily="@font/montserrat_light"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/profile"
@@ -20,12 +26,12 @@
         app:showAsAction="never" />
 
 
-    <item
+  <!--  <item
         android:id="@+id/action_faq"
         android:orderInCategory="102"
         android:title="FAQ"
         android:fontFamily="@font/montserrat_light"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
 
     <item
         android:id="@+id/action_share"
@@ -40,24 +46,18 @@
         android:title="Update"
         android:fontFamily="@font/montserrat_light"
         app:showAsAction="never" />
-    <item
+  <!--  <item
         android:id="@+id/action_change_pass"
         android:orderInCategory="104"
         android:title="Change Password"
         android:fontFamily="@font/montserrat_light"
-        app:showAsAction="never" />
-    <item
+        app:showAsAction="never" />-->
+   <!-- <item
         android:id="@+id/action_email_us"
         android:orderInCategory="105"
         android:title="Email us"
         android:fontFamily="@font/montserrat_light"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_locate_us"
-        android:orderInCategory="106"
-        android:title="Locate us"
-        android:fontFamily="@font/montserrat_light"
-        app:showAsAction="never" />
+        app:showAsAction="never" />-->
 
     <item
         android:id="@+id/action_logout"

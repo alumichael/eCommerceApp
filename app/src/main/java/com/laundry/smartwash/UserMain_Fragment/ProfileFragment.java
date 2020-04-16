@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
@@ -76,6 +77,8 @@ public class ProfileFragment extends Fragment {
     TextView mEmail;
     @BindView(R.id.phone_num)
     TextView mPhoneNum;
+    @BindView(R.id.address_txt)
+    TextView mAddressTxt;
     
     @BindView(R.id.edit_layout)
     ScrollView mEditLayout;
@@ -84,6 +87,12 @@ public class ProfileFragment extends Fragment {
     TextInputLayout mInputLayoutFullNameP;
     @BindView(R.id.full_editxt)
     EditText full_editxt;
+
+
+    @BindView(R.id.inputLayoutAddr)
+    TextInputLayout mInputLayoutAddress;
+    @BindView(R.id.address_editxt)
+    EditText address_editxt;
 
     @BindView(R.id.inputLayoutPhone_NumP)
     TextInputLayout mInputLayoutPhoneNumP;
@@ -95,7 +104,7 @@ public class ProfileFragment extends Fragment {
     AVLoadingIndicatorView mAvi1;
 
     
-    String password,fullname,phone_num,cameraFilePath;
+    String address,fullname,phone_num,cameraFilePath;
 
     int PICK_IMAGE_PASSPORT = 1;
     int CAM_IMAGE_PASSPORT = 2;
@@ -442,6 +451,7 @@ public class ProfileFragment extends Fragment {
 
         mPhoneNumEditxt.setText(userPreferences.getPhone());
         full_editxt.setText(userPreferences.getFullName());
+        address_editxt.setText(userPreferences.getUserAddr1());
 
 
 
@@ -498,18 +508,22 @@ public class ProfileFragment extends Fragment {
         }else if (mPhoneNumEditxt.getText().toString().trim().isEmpty()) {
             mInputLayoutPhoneNumP.setError("Phone number is Required!");
             isValid = false;
-        } else if (mPhoneNumEditxt.getText().toString().trim().length() != 11) {
+        } else if (address_editxt.getText().toString().trim().isEmpty()) {
+            mInputLayoutAddress.setError("Address is Required!");
+            isValid = false;
+        }else if (mPhoneNumEditxt.getText().toString().trim().length() != 11) {
             mInputLayoutPhoneNumP.setError("Your Phone number must be 11 in length");
             isValid = false;
         }else {
-            mInputLayoutPhoneNumP.setErrorEnabled(false);
+            mInputLayoutFullNameP.setErrorEnabled(false);
+            mInputLayoutAddress.setErrorEnabled(false);
             mInputLayoutPhoneNumP.setErrorEnabled(false);
 
         }
 
         if (isValid) {
             if (networkConnection.isNetworkConnected(getContext())) {
-                initFragment();
+                upDateProfile();
             }else {
                 showMessage("No Internet Connection");
             }
@@ -518,7 +532,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void initFragment(){
+    private void upDateProfile(){
         mUpdateBtn.setVisibility(View.GONE);
         mAvi1.setVisibility(View.VISIBLE);
 
@@ -526,13 +540,13 @@ public class ProfileFragment extends Fragment {
                userPreferences.getCustomerId());
 
 
-        updateUserDate(profile_updatePost);
+        updateUserData(profile_updatePost);
 
 
     }
 
 
-    private void updateUserDate(Profile_updatePost profile_updatePost){
+    private void updateUserData(Profile_updatePost profile_updatePost){
 
 
         //get client and call object for request
@@ -570,11 +584,13 @@ public class ProfileFragment extends Fragment {
                         return;
                     }
 
-                    fullname=mFullNameTxt.getText().toString();
-                    phone_num=mPhoneNum.getText().toString();
+                    fullname=full_editxt.getText().toString();
+                    address=address_editxt.getText().toString();
+                    phone_num=mPhoneNumEditxt.getText().toString();
 
                     userPreferences.setFullName(fullname);
                     userPreferences.setPhone(phone_num);
+                    userPreferences.setUserAddr1(address);
 
 
                     mUpdateBtn.setVisibility(View.VISIBLE);
@@ -612,12 +628,13 @@ public class ProfileFragment extends Fragment {
 
 
     private void showMessage(String s) {
-        Snackbar.make(mProfileLay, s, Snackbar.LENGTH_LONG).show();
+        Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
     }
 
     private void getUserProfile() {
         //Getting profile from Pref
         Log.i("fullname",userPreferences.getFullName());
+
         if(userPreferences.getFullName()==null){
             mFullNameTxt.setText("");
         }else if(userPreferences.getFullName().equals("null")){
@@ -628,6 +645,7 @@ public class ProfileFragment extends Fragment {
 
         mEmail.setText("Email: "+userPreferences.getUserEmail());
         mPhoneNum.setText("Phone No: "+userPreferences.getPhone());
+        mAddressTxt.setText("Address: "+userPreferences.getUserAddr1());
 
        // mProgressBarProfile.setVisibility(View.VISIBLE);
 

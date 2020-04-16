@@ -41,7 +41,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="18dp"
             >
@@ -50,7 +49,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="10dp"
                     >
@@ -99,7 +98,7 @@
                             android:textColor="@color/colorWhite"
                             android:layout_gravity="center_vertical"
                             android:gravity="start"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             />
 
                         <com.wang.avi.AVLoadingIndicatorView
@@ -113,20 +112,28 @@
                             app:indicatorName="BallPulseIndicator"
                             android:layout_marginLeft="10dp" />
 
+
+
                     </LinearLayout>
-
-
+                    <TextView
+                        android:id="@+id/check_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Check Order Status"
+                        android:padding="8dp"
+                        android:background="@color/colorPrimaryDark"
+                        android:textSize="21sp"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:textColor="@color/colorWhite"
+                        />
 
                 </LinearLayout>
 
 
-            <View
-                android:layout_width="10dp"
-                android:layout_height="1dp"/>
-
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/fund_wallet_card"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="100dp"
                 app:cardElevation="6dp"
                 android:layout_weight="1"

@@ -156,23 +156,32 @@ public class MainActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         if (itemId == R.id.action_about) {
 
+                startActivity(new Intent(MainActivity.this,AboutActivity.class));
 
             return true;
-        } else if (itemId == R.id.profile) {
+        } else if (itemId == R.id.refresh) {
+
+            fragment = new Fragment_Dashboard();
+            showFragment(fragment);
+
+
+            return true;
+        }else if (itemId == R.id.profile) {
 
             applyToolbarChildren("Profile", "user information");
             fragment = new ProfileFragment();
             showFragment(fragment);
+            return true;
 
-
-        } else if (itemId == R.id.action_change_pass) {
+        }/* else if (itemId == R.id.action_change_pass) {
 
           //  changePassword();
+            return true;
 
         } else if (itemId == R.id.action_faq) {
 
             return true;
-        } else if (itemId == R.id.action_share) {
+        }*/ else if (itemId == R.id.action_share) {
 
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
@@ -185,23 +194,19 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         } else if (itemId == R.id.action_update) {
+
             goPlayStore();
 
             return true;
         }
-        else if (itemId == R.id.action_locate_us) {
-          /* startActivity(new Intent(MainActivity.this,LocateUs.class));
-           this.finish();*/
-            return true;
-        }
 
-        else if (itemId == R.id.action_email_us) {
+
+       /* else if (itemId == R.id.action_email_us) {
             applyToolbarChildren("Email Us", "keep us informed");
-           /* fragment = new EmailUsFragment();
+            fragment = new EmailUsFragment();
             showFragment(fragment);
-*/
             return true;
-        }else if (itemId == R.id.action_logout) {
+        }*/else if (itemId == R.id.action_logout) {
             finish();
             return true;
         }

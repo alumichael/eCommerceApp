@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
 import com.google.android.material.snackbar.Snackbar;
@@ -29,6 +30,9 @@ import com.laundry.smartwash.Model.ClothList.ClothGetData;
 import com.laundry.smartwash.Model.ClothList.ClothGetObj;
 import com.laundry.smartwash.Model.Errors.APIError;
 import com.laundry.smartwash.Model.Errors.ErrorUtils;
+import com.laundry.smartwash.Model.OrderPost.OrderData;
+import com.laundry.smartwash.Model.OrderPost.OrderHead;
+import com.laundry.smartwash.Model.OrderPost.OrderedCloths;
 import com.laundry.smartwash.NetworkConnection;
 import com.laundry.smartwash.R;
 import com.laundry.smartwash.UserMain_Fragment.OrderActivity;
@@ -38,6 +42,8 @@ import com.laundry.smartwash.retrofit_interface.ApiInterface;
 import com.laundry.smartwash.retrofit_interface.ServiceGenerator;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,7 +52,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class serviceForm extends AppCompatActivity implements View.OnClickListener{
+public class serviceForm extends AppCompatActivity implements View.OnClickListener,ClothingAdapter.MessageAdapterListener,
+ SwipeRefreshLayout.OnRefreshListener {
 
 
 
@@ -64,17 +71,9 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
     @BindView(R.id.recycler_view)
     RecyclerView recycler_view;
 
-    @BindView(R.id.avi1)
-    AVLoadingIndicatorView progressbar;
+    @BindView(R.id.swipe_refresh_layout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
- /*   @BindView(R.id.basket_count)
-    TextView mBasketCount;
-
-    @BindView(R.id.total_price)
-    TextView mTotalPrice;*/
-
-    @BindView(R.id.add_more_service)
-    Button mAddMoreServiceBtn;
 
     @BindView(R.id.checkout)
     Button mCheckoutBtn;
@@ -83,11 +82,19 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
     String cate_name="";
     String cate_price="";
     String currency;
+    OrderData orderData;
+
+    int no_of_item;
+    int price;
+    int special;
 
     private ClothingAdapter clothingAdapter;
     private List<ClothGetData> clothList;
     UserPreferences userPreferences;
 
+    private ArrayList<ClothGetData> liquidList;
+    ClothGetData clothGetData;
+    ClothGetObj clothGetObj;
 
     NetworkConnection networkConnection = new NetworkConnection();
     ApiInterface client = ServiceGenerator.createService(ApiInterface.class);
@@ -104,16 +111,61 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
         cate_name=intent.getStringExtra(Constant.CATE_NAME);
         cate_price=intent.getStringExtra(Constant.CATE_PRICE);
 
+
+
         mServiceTxt.setText(cate_name);
         currency="NGN " .concat(cate_price) + " per Cloth";
         mPriceTxt.setText(currency);
 
-        getCloths();
+        if(cate_name.equals("Smartwash Liquid Soup")){
 
-        applyToolbarChildren("Services");
+            liquidList= new ArrayList<>();
+            clothGetData=new ClothGetData();
+            clothGetData.setClothName("Liquid Soap");
+            clothGetData.setClothAmount("100");
+
+            liquidList.add(clothGetData);
+
+
+            clothGetObj=new ClothGetObj();
+            clothGetObj.setData(liquidList);
+
+            clothList=clothGetObj.getData();
+            lt();
+
+        }else{
+            init();
+        }
+
+
+
+        applyToolbarChildren("Ordering");
 
         mCheckoutBtn.setOnClickListener(this);
 
+
+    }
+
+    private void init() {
+        getCloths();
+
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+            }
+        });
+
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    private void lt(){
+
+        clothingAdapter = new ClothingAdapter(getApplicationContext(), clothList,this, cate_price,cate_name);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
+        recycler_view.setLayoutManager(linearLayoutManager);
+        recycler_view.setItemAnimator(new DefaultItemAnimator());
+        recycler_view.setAdapter(clothingAdapter);
     }
 
 
@@ -130,8 +182,6 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
 
     private void getCloths() {
         if (networkConnection.isNetworkConnected(this)) {
-        recycler_view.setVisibility(View.INVISIBLE);
-        progressbar.setVisibility(View.VISIBLE);
         
         //get client and call object for request
         Call<ClothGetObj> call = client.fetch_cloths();
@@ -145,44 +195,30 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
 
                         showMessage("Fetch Failed: " + apiError.getErrors());
                         Log.i("Invalid Fetch", String.valueOf(apiError.getErrors()));
-                      
-                        //Log.i("Invalid Entry", response.errorBody().toString());
-
-                        recycler_view.setVisibility(View.INVISIBLE);
-                        progressbar.setVisibility(View.GONE);
+                        mSwipeRefreshLayout.setRefreshing(false);
 
                     } catch (Exception e) {
                         Log.i("Fetch Failed", e.getMessage());
                         showMessage("Fetch Failed");
-                        recycler_view.setVisibility(View.INVISIBLE);
-                        progressbar.setVisibility(View.GONE);
-
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
 
                     return;
                 }
 
+                mSwipeRefreshLayout.setRefreshing(false);
                 clothList = response.body().getData();
-
 
                 int count = clothList.size();
 
-
                 if (count == 0) {
                     showMessage(cate_name+" is unavailable for the moment");
-                    recycler_view.setVisibility(View.INVISIBLE);
-                    progressbar.setVisibility(View.GONE);
+                    mSwipeRefreshLayout.setVisibility(View.GONE);
 
-                } else {
+                } else{
+                    lt();
+                    mSwipeRefreshLayout.setVisibility(View.VISIBLE);
 
-                    clothingAdapter = new ClothingAdapter(getApplicationContext(), clothList);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false);
-                    recycler_view.setLayoutManager(linearLayoutManager);
-                    recycler_view.setItemAnimator(new DefaultItemAnimator());
-                    recycler_view.setAdapter(clothingAdapter);
-
-                    recycler_view.setVisibility(View.VISIBLE);
-                    progressbar.setVisibility(View.GONE);
                 }
             }
 
@@ -190,16 +226,16 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
 
             @Override
             public void onFailure(Call<ClothGetObj> call, Throwable t) {
-                showMessage("Fetch failed, check your internet " + t.getMessage());
+                showMessage("Fetch failed, check your internet ");
                 Log.i("GEtError", t.getMessage());
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
 
         }else{
 
             showMessage("No Internet connection discovered!");
-            recycler_view.setVisibility(View.INVISIBLE);
-            progressbar.setVisibility(View.GONE);
+            mSwipeRefreshLayout.setRefreshing(false);
 
         }
 
@@ -230,29 +266,68 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
     }
 
 
+    @Override
+    public void onClothClicked(int position) {
+
+        toggleSelection(position);
+
+
+    }
+
+    private void toggleSelection(int position) {
+        clothingAdapter.toggleSelection(position);
+        int count = clothingAdapter.getSelectedItemCount();
+
+        if (count == 0) {
+            showMessage("Zero Selection");
+        } else {
+            showMessage(count+" Selection");
+        }
+    }
+
+
 
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.checkout:
-                int no_of_item=userPreferences.getTotalPicked();
-                int price=no_of_item * Integer.parseInt(cate_price);
 
-                String summary="Total in Basket: "+no_of_item+"\n"+"Total Price: "+price;
 
-                basketSummary(summary);
+                no_of_item=userPreferences.getTotalPicked();
+
+                String summaryTemp="Total in Basket: "+no_of_item+"\n"+"Total Price: "+userPreferences.getTotalPrice();
+                userPreferences.setCategory(cate_name);
+
+                List<OrderedCloths> orders =
+                        clothingAdapter.getSelectedItems();
+                orderData=new OrderData(userPreferences.getCategory(),userPreferences.getTotalPrice(),"pending",
+                        orders);
+
+
+                if(cate_name.equals("Smartwash Liquid Soup")){
+                    int litre_count= orders.get(0).getQuantity();
+                    if(litre_count<10){
+                        ErrorAlert("You have to order beyond 9 litres, if you are ordering only for liquid soap, otherwise order" +
+                                " less than 10litres along side cloth order. Thank you!");
+                    }else{
+                        basketSummary(summaryTemp);
+                    }
+
+                }else{
+                    basketSummary(summaryTemp);
+                }
+
+
+
 
                 break;
 
-            case R.id.add_more_service:
+         /*   case R.id.add_more_service:
 
 
 
-                break;
-
-
-
+                break;*/
 
 
         }
@@ -268,10 +343,20 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
                     @Override
                     public void onClick(DialogInterface dialog, int i) {
                         dialog.dismiss();
+
+                        Intent intent = new Intent(serviceForm.this, OrderActivity.class);
+                        intent.putExtra("category", orderData.getCategory());
+                        intent.putExtra("total_price", String.valueOf(orderData.getTotalAmount()));
+                        intent.putExtra("order_status",orderData.getStatus());
+                        intent.putExtra("order_list", (Serializable) orderData.getOrder());
+                        startActivity(intent);
+                        finish();
+
                         userPreferences.setTotalPicked(0);
                         userPreferences.setCount(0);
-                        startActivity(new Intent(serviceForm.this, OrderActivity.class));
-                        finish();
+                        userPreferences.setTotalPrice(0);
+                        //startActivity(new Intent(serviceForm.this, OrderActivity.class));
+                       // finish();
 
                     }
                 })
@@ -284,6 +369,32 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
                     }
                 })
                 .show();
+
+    }
+
+    private void ErrorAlert(String error_msg) {
+
+        new AlertDialog.Builder(this)
+                .setTitle("Invalid Order")
+                .setIcon(R.drawable.ic_error_outline_black_24dp)
+                .setMessage(error_msg)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+
+
+                    }
+                })
+
+
+                .show();
+
+    }
+
+    @Override
+    public void onRefresh() {
+        getCloths();
 
     }
 }

@@ -188,19 +188,6 @@
                     />
             </LinearLayout>
 
-          <!--  <View
-                android:layout_width="match_parent"
-                android:layout_height="12dp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="© 2019 Sovereign Trust Insurance Plc \n All right reserved."
-                android:textAlignment="center"
-                android:textSize="12sp"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="bottom"
-                android:layout_margin="@dimen/size_fifteen"
-                />-->
 
 
         </LinearLayout>

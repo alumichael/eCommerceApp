@@ -52,6 +52,10 @@
             android:name="android.support.PARENT_ACTIVITY"
             android:value=".MainActivity" />
 
+        <meta-data
+            android:name="co.paystack.android.PublicKey"
+            android:value="pk_test_71f87b9b33563e09e9d6ef9bbac546d352be7640"/>
+
 
         <activity android:name=".WelcomeSlideActivity" />
         <activity android:name=".SignUp" />
@@ -60,9 +64,11 @@
         <activity android:name=".UserMain_Fragment.service_activities.serviceForm"
             android:parentActivityName=".MainActivity"/>
         <activity android:name=".UserMain_Fragment.OrderActivity"
-            android:parentActivityName=".MainActivity"/>
+           />
         <activity android:name=".WalletPaymentActivity"
             android:parentActivityName=".MainActivity"/>
+        <activity android:name=".UserMain_Fragment.AcknowledgeActivity" />
+        <activity android:name=".AboutActivity" />
     </application>
 
 </manifest>
