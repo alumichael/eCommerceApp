@@ -36,16 +36,16 @@
     </LinearLayout>
 
 
-  <!--  <Spinner
-        android:id="@+id/order_spinner"
+    <Spinner
+        android:id="@+id/status_spinner"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="@dimen/size_three"
+        android:layout_margin="@dimen/size_three"
         android:background="@drawable/spinner_bg"
         android:visibility="visible"
         android:layout_marginBottom="5dp"
 
-        />-->
+        />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"

@@ -103,9 +103,9 @@
             android:text="Recieved"
             android:textSize="21sp"
             android:layout_margin="8dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/outline_transparent_bg2"
             android:layout_gravity="center"
-            android:textColor="@color/colorWhite" />
+            android:textColor="@color/colorAccent" />
 
         <com.wang.avi.AVLoadingIndicatorView
             android:id="@+id/avi1"

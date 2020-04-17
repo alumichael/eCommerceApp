@@ -136,7 +136,7 @@ public class AcknowledgeActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.submit_button:
+            case R.id.received_button:
 
                 UpdateOrderByCustomer(orderId,userId,statusUpdate);
                 break;

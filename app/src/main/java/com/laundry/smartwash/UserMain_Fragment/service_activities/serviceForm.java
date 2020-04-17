@@ -215,6 +215,7 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
                     showMessage(cate_name+" is unavailable for the moment");
                     mSwipeRefreshLayout.setVisibility(View.GONE);
 
+
                 } else{
                     lt();
                     mSwipeRefreshLayout.setVisibility(View.VISIBLE);

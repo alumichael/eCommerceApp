@@ -27,6 +27,7 @@ import com.laundry.smartwash.Model.OrderStatusGet.OrderStatusHead;
 import com.laundry.smartwash.Model.Transaction.transactData;
 import com.laundry.smartwash.Model.Transaction.transactHead;
 
+import com.laundry.smartwash.Model.fetchByStatus;
 import com.laundry.smartwash.R;
 import com.laundry.smartwash.UserPreferences;
 import com.laundry.smartwash.adapter.OrderAdapter;
@@ -63,8 +64,8 @@ public class Fragment_Status extends Fragment implements SwipeRefreshLayout.OnRe
     SwipeRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.recycler_status)
     RecyclerView mRecyclerStatus;
-    /*@BindView(R.id.order_spinner)
-    Spinner mOrderSPinner;*/
+    @BindView(R.id.status_spinner)
+    Spinner mStatusSPinner;
     /** ButterKnife Code **/
 
     //private TransactionAdapter transactionAdapter;
@@ -75,6 +76,8 @@ public class Fragment_Status extends Fragment implements SwipeRefreshLayout.OnRe
 
     List<OrderStatusData> status_item;
     List<OrderList> order_item;
+
+    String statusString;
 
 
     ApiInterface client= ServiceGenerator.createService(ApiInterface.class);
@@ -109,6 +112,7 @@ public class Fragment_Status extends Fragment implements SwipeRefreshLayout.OnRe
         View view=inflater.inflate(R.layout.fragment_status, container, false);
         ButterKnife.bind(this,view);
         init();
+        orderSpinner();
 
 
         return  view;
@@ -130,7 +134,6 @@ public class Fragment_Status extends Fragment implements SwipeRefreshLayout.OnRe
 
 
 
-/*
     private void orderSpinner() {
         // Create an ArrayAdapter using the string array and a default spinner
         ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter
@@ -141,9 +144,9 @@ public class Fragment_Status extends Fragment implements SwipeRefreshLayout.OnRe
         staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         // Apply the adapter to the spinner
-        mOrderSPinner.setAdapter(staticAdapter);
+        mStatusSPinner.setAdapter(staticAdapter);
 
-        mOrderSPinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mStatusSPinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int position, long id) {
@@ -153,13 +156,17 @@ public class Fragment_Status extends Fragment implements SwipeRefreshLayout.OnRe
                         getOrderStatus();
                         break;
                     case "Pending Order":
-
+                        getOrderByStatus("pending");
                         break;
                     case "Delivered Order":
+
+                        getOrderByStatus("delivered");
 
                         break;
 
                     case "Received Order":
+
+                        getOrderByStatus("received");
 
                         break;
 
@@ -173,15 +180,12 @@ public class Fragment_Status extends Fragment implements SwipeRefreshLayout.OnRe
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                mOrderSPinner.getItemAtPosition(0);
-
-
+                mStatusSPinner.getItemAtPosition(0);
 
             }
         });
 
     }
-*/
 
 
 
@@ -255,10 +259,12 @@ public class Fragment_Status extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
 
-   /* private void getOrderByStatus(String status){
+    private void getOrderByStatus(String status){
+
+        fetchByStatus fetch=new fetchByStatus(userPreferences.getCustomerId(),status);
 
         //get client and call object for request
-        Call<OrderStatusHead> call=client.fetch_order_status(userPreferences.getCustomerId());
+        Call<OrderStatusHead> call=client.fetch_orderBystatus(fetch);
         call.enqueue(new Callback<OrderStatusHead>() {
             @Override
             public void onResponse(Call<OrderStatusHead> call, Response<OrderStatusHead> response) {
@@ -320,7 +326,6 @@ public class Fragment_Status extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
 
-*/
 
     private void showMessage(String s) {
         Snackbar.make(mStatusLayout, s, Snackbar.LENGTH_LONG).show();

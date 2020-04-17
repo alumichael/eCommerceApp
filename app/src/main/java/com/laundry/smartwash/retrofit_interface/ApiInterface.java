@@ -20,6 +20,7 @@ import com.laundry.smartwash.Model.Transaction.newTransact;
 import com.laundry.smartwash.Model.Transaction.transactHead;
 import com.laundry.smartwash.Model.Wallet.createWallet;
 import com.laundry.smartwash.Model.Wallet.fetchWallet;
+import com.laundry.smartwash.Model.fetchByStatus;
 import com.laundry.smartwash.Model.updateOrder;
 
 
@@ -57,12 +58,15 @@ public interface ApiInterface {
     Call<fetchWallet> fetch_wallet(@Body OnlyIDRequest onlyIDRequest);
 
 
-    @POST("api/transaction/fetchtransactions.php")
+    @GET("api/transaction/fetchtransactions.php")
     Call<transactHead> fetch_transaction(@Body OnlyIDRequest onlyIDRequest);
 
 
-    @POST("api/order/fetchuserorders.php")
+    @GET("api/order/fetchuserorders.php")
     Call<OrderStatusHead> fetch_order_status(@Body OnlyIDRequest userId);
+
+    @GET("api/order/ordersbystatus.php")
+    Call<OrderStatusHead> fetch_orderBystatus(@Body fetchByStatus fetch);
 
 
     @POST("api/wallet/debitwallet.php")
