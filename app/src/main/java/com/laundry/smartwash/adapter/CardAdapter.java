@@ -52,41 +52,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.MyViewHolder> 
         CategoryGetData serviceOption = serviceList.get(i);
 
         holder.mProductName.setText(serviceOption.getCateName());
-        //holder.mQuoteBuyImg.setImageResource(serviceOption.getThumbnail());
-        //holder.mDsc.setText(serviceOption.get());
+        holder.mDsc.setText(serviceOption.getCateDesc());
+
         price= "₦" + serviceOption.getCatePrice();
         holder.mProductAmount.setText(price);
 
         holder.setItemClickListener(pos -> {
-
-            switch (serviceList.get(pos).getCateName()){
-                case "Executive Wash":
-                case "Smartwash Liquid Soup":
-                case "General Wash":
-                case "Family Wash":
-                case "Express Wash":
-
-                    nextActivity(serviceList.get(pos).getCateName(),serviceList.get(pos).getCatePrice(), serviceForm.class);
-                    break;
-
-
-
-
-                default:
-                    Toast.makeText(context, "Not Valid Service",Toast.LENGTH_LONG).show();
-                    break;
-
-
-
-
-            }
+                    nextActivity(serviceList.get(pos).getCateName(),serviceList.get(pos).getCateMinPrice(),serviceList.get(pos).getCatePrice(), serviceForm.class);
 
         });
     }
 
-    private void nextActivity(String cate_name,String cate_price, Class productActivityClass) {
+    private void nextActivity(String cate_name,String min_price,String cate_price, Class productActivityClass) {
         Intent i = new Intent(context, productActivityClass);
         i.putExtra(Constant.CATE_NAME, cate_name);
+        i.putExtra(Constant.CATE_MIN_PRICE, min_price);
         i.putExtra(Constant.CATE_PRICE, cate_price);
         context.startActivity(i);
     }

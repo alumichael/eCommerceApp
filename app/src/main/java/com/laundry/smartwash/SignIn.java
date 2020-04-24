@@ -193,7 +193,6 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
 
     private  void sentNetworkRequest(UserPostData userPostObj){
         try {
-
             //get client and call object for request
             ApiInterface client = ServiceGenerator.createService(ApiInterface.class);
 
@@ -231,7 +230,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                             try {
                                 APIError apiError = ErrorUtils.parseError(response);
 
-                                showMessage("Login Failed: " + apiError.getErrors());
+                                showMessage("Login Failed");
                                 Log.i("Invalid EntryK", apiError.getErrors().toString());
                                 Log.i("Invalid Entry", response.errorBody().toString());
 

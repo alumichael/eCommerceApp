@@ -87,11 +87,11 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
 
         holder.cloth_name.setText(clothOption.getClothName());
 
-        if(cate_name.equals("Family Wash")){
+        if(cate_name.toLowerCase().equals("family wash")){
             if(!clothOption.getClothAmount().equals("0")){
                 holder.cloth_amount.setVisibility(View.VISIBLE);
 
-                if(clothOption.getClothName().equals("Liquid Soap")){
+                if(clothOption.getClothName().toLowerCase().equals("liquid soap")){
                     String clothe_type="NGN "+clothOption.getClothAmount()+": / Litre";
                     holder.cloth_amount.setText(clothe_type);
                 }else{
@@ -100,17 +100,17 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
                 }
 
             }else{
-                holder.cloth_amount.setVisibility(View.INVISIBLE);
+                holder.cloth_amount.setVisibility(View.GONE);
             }
 
         }else{
-            if(clothOption.getClothName().equals("Liquid Soap")){
+            if(clothOption.getClothName().toLowerCase().equals("liquid soap")){
                 holder.cloth_amount.setVisibility(View.VISIBLE);
                 String clothe_type="NGN "+clothOption.getClothAmount()+": / Litre";
                 holder.cloth_amount.setText(clothe_type);
             }else{
 
-                holder.cloth_amount.setVisibility(View.INVISIBLE);
+                holder.cloth_amount.setVisibility(View.GONE);
             }
         }
 
@@ -142,7 +142,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
                     }
 
                     holder.count_text.setText("0");
-                    holder.count_layout.setVisibility(View.INVISIBLE);
+                    holder.count_layout.setVisibility(View.GONE);
 
                 }else{
 
@@ -154,6 +154,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
 
             }
         });
+
 
         holder.count_less.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,10 +168,11 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
 
                 //count=userPreferences.getCount();
 
-                if (count >= 0) {
+                if (count > 0) {
 
                     count--;
                     userPreferences.setCount(count);
+
 
                     result = String.valueOf(userPreferences.getCount());
 
@@ -190,6 +192,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
                 } else {
                     result = String.valueOf(0);
                     userPreferences.setCount(Integer.parseInt(result));
+                    holder.count_text.setText(result);
 
                 }
 
@@ -229,20 +232,14 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
                 } else {
                     result = String.valueOf(0);
                     userPreferences.setCount(Integer.parseInt(result));
+                    holder.count_text.setText(result);
                 }
 
                 userPreferences.setCount(Integer.parseInt(result));
 
-                //countList.add(0,result);
-
-                //Log.i("list",countList.toString());
 
             }
         });
-
-
-
-
 
 
     }
@@ -330,18 +327,8 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
             super(itemView);
             ButterKnife.bind(this, itemView);
 
-           // itemView.setOnClickListener(this);
         }
 
-       /* public void setItemClickListener(ItemClickListener itemClickListener) {
-            this.itemClickListener = itemClickListener;
-        }
-
-        @Override
-        public void onClick(View view) {
-
-            this.itemClickListener.onItemClick(this.getLayoutPosition());
-        }*/
 
     }
 }

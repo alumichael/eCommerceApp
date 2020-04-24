@@ -74,7 +74,6 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-
     @BindView(R.id.checkout)
     Button mCheckoutBtn;
 
@@ -85,8 +84,10 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
     OrderData orderData;
 
     int no_of_item;
+    int pick_up_charge;
     int price;
     int special;
+    int min_price_order;
 
     private ClothingAdapter clothingAdapter;
     private List<ClothGetData> clothList;
@@ -110,6 +111,7 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
         Intent intent = getIntent();
         cate_name=intent.getStringExtra(Constant.CATE_NAME);
         cate_price=intent.getStringExtra(Constant.CATE_PRICE);
+        min_price_order= Integer.parseInt(intent.getStringExtra(Constant.CATE_MIN_PRICE));
 
 
 
@@ -117,7 +119,7 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
         currency="NGN " .concat(cate_price) + " per Cloth";
         mPriceTxt.setText(currency);
 
-        if(cate_name.equals("Smartwash Liquid Soup")){
+        if(cate_name.toLowerCase().equals("smartwash liquid soap")){
 
             liquidList= new ArrayList<>();
             clothGetData=new ClothGetData();
@@ -175,7 +177,6 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(title);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_keyboard_arrow_left_black_24dp);
-
 
     }
 
@@ -244,11 +245,11 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
     }
 
 
-
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        userPreferences.setTotalPicked(0);
+        userPreferences.setCount(0);
+        userPreferences.setTotalPrice(0);
         finish();
         return super.onOptionsItemSelected(item);
     }
@@ -267,23 +268,23 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
     }
 
 
+    private void toggleSelection(int position) {
+        clothingAdapter.toggleSelection(position);
+      /*  int count = clothingAdapter.getSelectedItemCount();
+
+        if (count == 0) {
+            showMessage("Zero Selection");
+        } else {
+            showMessage(count+" Selection");
+        }*/
+    }
+
     @Override
     public void onClothClicked(int position) {
 
         toggleSelection(position);
 
 
-    }
-
-    private void toggleSelection(int position) {
-        clothingAdapter.toggleSelection(position);
-        int count = clothingAdapter.getSelectedItemCount();
-
-        if (count == 0) {
-            showMessage("Zero Selection");
-        } else {
-            showMessage(count+" Selection");
-        }
     }
 
 
@@ -296,39 +297,56 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
 
 
                 no_of_item=userPreferences.getTotalPicked();
+                pick_up_charge=50;
 
-                String summaryTemp="Total in Basket: "+no_of_item+"\n"+"Total Price: "+userPreferences.getTotalPrice();
+                String summaryTemp="Total in Basket: "+no_of_item+"\n"+"Total Price: ₦"+userPreferences.getTotalPrice()+"\n"+
+                        "Pick Up Cost: ₦"+pick_up_charge;
                 userPreferences.setCategory(cate_name);
 
                 List<OrderedCloths> orders =
                         clothingAdapter.getSelectedItems();
-                orderData=new OrderData(userPreferences.getCategory(),userPreferences.getTotalPrice(),"pending",
+                orderData=new OrderData(userPreferences.getCategory(),userPreferences.getTotalPrice()+pick_up_charge,"pending",
                         orders);
 
 
-                if(cate_name.equals("Smartwash Liquid Soup")){
+                if(cate_name.toLowerCase().equals("smartwash liquid soap")){
                     int litre_count= orders.get(0).getQuantity();
                     if(litre_count<10){
-                        ErrorAlert("You have to order beyond 9 litres, if you are ordering only for liquid soap, otherwise order" +
+                        ErrorAlert("You have to select beyond 9 litres, if you are ordering only for liquid soap, otherwise order" +
                                 " less than 10litres along side cloth order. Thank you!");
                     }else{
                         basketSummary(summaryTemp);
                     }
 
+                }else if(cate_name.toLowerCase().equals("family wash")){
+                    int total_allowed=userPreferences.getTotalPrice();
+
+                    if(total_allowed>1500){
+                        ErrorAlert("You have selected beyond ₦1500 total family order allowed on a go, please re-select your clothing, every cloth is ₦50 except the " +
+                                "special clothing, Thank you!");
+                    }else{
+                        basketSummary(summaryTemp);
+                    }
+
+
+
                 }else{
-                    basketSummary(summaryTemp);
+
+                    int total_allowed=userPreferences.getTotalPrice();
+
+                    if(total_allowed<min_price_order){
+                        int aggregate=min_price_order-1;
+                        ErrorAlert("You have to select beyond ₦" + aggregate+" total order on a go, please re-select your clothing, Thank you!");
+                    }else{
+                        basketSummary(summaryTemp);
+                    }
+
                 }
 
 
 
 
                 break;
-
-         /*   case R.id.add_more_service:
-
-
-
-                break;*/
 
 
         }
@@ -356,8 +374,7 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
                         userPreferences.setTotalPicked(0);
                         userPreferences.setCount(0);
                         userPreferences.setTotalPrice(0);
-                        //startActivity(new Intent(serviceForm.this, OrderActivity.class));
-                       // finish();
+
 
                     }
                 })
@@ -395,6 +412,9 @@ public class serviceForm extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onRefresh() {
+        userPreferences.setTotalPicked(0);
+        userPreferences.setCount(0);
+        userPreferences.setTotalPrice(0);
         getCloths();
 
     }

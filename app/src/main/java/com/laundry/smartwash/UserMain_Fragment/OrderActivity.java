@@ -2,6 +2,7 @@ package com.laundry.smartwash.UserMain_Fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -192,7 +193,7 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
         if (networkConnection.isNetworkConnected(this)) {
             mRecyclerView.setVisibility(View.INVISIBLE);
             mProgressBar.setVisibility(View.VISIBLE);
-            mSubmtButton.setVisibility(View.INVISIBLE);
+            mSubmtButton.setVisibility(View.GONE);
 
             OnlyIDAmountRequest onlyIDAmountRequest=new OnlyIDAmountRequest(userPreferences.getCustomerId(),total_price);
             Call<Message> call = client.debit_wallet(onlyIDAmountRequest);
@@ -245,6 +246,7 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
                 @Override
                 public void onFailure(Call<Message> call, Throwable t) {
+                    ErrorAlert("Failed to Order");
                     //showMessage("Debit failed, check your internet " + t.getMessage());
                     Log.i("GEtError", t.getMessage());
                     mRecyclerView.setVisibility(View.VISIBLE);
@@ -255,7 +257,7 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
 
         }else{
 
-            showMessage("No Internet connection discovered!");
+            ErrorAlert("No Internet connection discovered!");
             mRecyclerView.setVisibility(View.VISIBLE);
             mProgressBar.setVisibility(View.GONE);
             mSubmtButton.setVisibility(View.VISIBLE);
@@ -337,6 +339,7 @@ public class OrderActivity extends AppCompatActivity implements View.OnClickList
             mRecyclerView.setVisibility(View.VISIBLE);
             mProgressBar.setVisibility(View.GONE);
             mSubmtButton.setVisibility(View.VISIBLE);
+
 
         }
 

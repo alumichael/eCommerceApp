@@ -2,6 +2,7 @@ package com.laundry.smartwash.retrofit_interface;
 
 
 
+import com.laundry.smartwash.Model.Banner.BannerGetObj;
 import com.laundry.smartwash.Model.Category.CategoryGetObj;
 import com.laundry.smartwash.Model.ClothList.ClothGetObj;
 import com.laundry.smartwash.Model.LoginModel.UserGetObj;
@@ -53,19 +54,22 @@ public interface ApiInterface {
     @GET("api/cloth/fetchCloth.php")
     Call<ClothGetObj> fetch_cloths();
 
+    @GET("api/banner/fetchBanners.php")
+    Call<BannerGetObj> fetch_banner();
+
 
     @POST("api/wallet/fetchwallet.php")
     Call<fetchWallet> fetch_wallet(@Body OnlyIDRequest onlyIDRequest);
 
 
-    @GET("api/transaction/fetchtransactions.php")
+    @POST("api/transaction/fetchtransactions.php")
     Call<transactHead> fetch_transaction(@Body OnlyIDRequest onlyIDRequest);
 
 
-    @GET("api/order/fetchuserorders.php")
+    @POST("api/order/fetchuserorders.php")
     Call<OrderStatusHead> fetch_order_status(@Body OnlyIDRequest userId);
 
-    @GET("api/order/ordersbystatus.php")
+    @POST("api/order/ordersbystatus.php")
     Call<OrderStatusHead> fetch_orderBystatus(@Body fetchByStatus fetch);
 
 

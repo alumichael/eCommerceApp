@@ -24,6 +24,7 @@
         android:layout_height="match_parent"
         android:visibility="visible"
         android:scrollbars="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,18 +116,7 @@
 
 
                     </LinearLayout>
-                    <TextView
-                        android:id="@+id/check_status"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Check Order Status"
-                        android:padding="8dp"
-                        android:background="@color/colorPrimaryDark"
-                        android:textSize="21sp"
-                        android:layout_marginTop="4dp"
-                        android:fontFamily="@font/nunito_semibold"
-                        android:textColor="@color/colorWhite"
-                        />
+
 
                 </LinearLayout>
 
@@ -135,7 +125,7 @@
                 android:id="@+id/fund_wallet_card"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
-                app:cardElevation="6dp"
+                app:cardElevation="8dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/colorAccent"
                 app:cardCornerRadius="6dp"
@@ -146,14 +136,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:padding="10dp"
+                    android:padding="6dp"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
                     >
                     <ImageView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:srcCompat="@drawable/ic_wallet"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
                         />
 
                     <TextView
@@ -163,10 +155,11 @@
                         android:text="Fund Wallet"
                         android:layout_marginTop="2dp"
                         android:linksClickable="true"
-                        android:textSize="20sp"
+                        android:textSize="14sp"
+                        android:gravity="center_horizontal"
                         android:layout_marginBottom="2dp"
                         android:fontFamily="@font/nunito_semibold"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/colorWhite"
                         />
 
 
@@ -180,6 +173,81 @@
         </LinearLayout>
 
 
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center_vertical"
+                android:weightSum="2"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/make_order"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorPrimaryDark"
+                    app:cardElevation="@dimen/size_six"
+                    app:cardPreventCornerOverlap="true"
+                    android:visibility="visible"
+                    app:cardCornerRadius="4dp">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Make Order"
+                    android:layout_gravity="center"
+                    android:padding="8dp"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:textColor="@color/colorWhite"
+                    />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="2dp"/>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/check_status"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/colorAmber"
+                    android:layout_marginBottom="6dp"
+                    android:layout_marginTop="4dp"
+                    app:cardElevation="@dimen/size_six"
+                    app:cardPreventCornerOverlap="true"
+                    android:visibility="visible"
+                    app:cardCornerRadius="4dp">
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Check Order"
+                    android:layout_gravity="center"
+                    android:padding="8dp"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:textColor="@color/colorAccent"
+                    />
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+            </LinearLayout>
+
+
+
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="150dp"
@@ -187,7 +255,7 @@
             android:layout_weight="1"
             app:cardCornerRadius="8dp"
             app:cardElevation="@dimen/size_eight"
-            android:layout_marginTop="@dimen/size_twenty_seven"
+            android:layout_marginTop="@dimen/size_twenty_two"
             android:layout_marginBottom="@dimen/size_fifteen"
             >
             <FrameLayout
@@ -220,7 +288,7 @@
             android:background="@drawable/spinner_bg"
             android:layout_marginBottom="6dp"
             android:layout_marginTop="4dp"
-            app:cardElevation="@dimen/size_ten"
+            app:cardElevation="@dimen/size_six"
             app:cardPreventCornerOverlap="true"
             android:visibility="visible"
             app:cardCornerRadius="4dp">
@@ -272,7 +340,7 @@
             android:layout_marginTop="12dp"
             android:scrollbars="vertical"
             android:elevation="10dp"
-            android:visibility="visible"
+            android:visibility="gone"
             tools:listitem="@layout/services_list"
             />
 

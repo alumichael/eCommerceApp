@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:id="@+id/product_layout"
     android:layout_width="match_parent"
-    android:padding="@dimen/size_five"
+    android:padding="@dimen/size_three"
     android:background="@color/colorWhite"
     android:layout_height="wrap_content">
 
@@ -23,8 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="4dp"
-            >
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp">
 
 
             <androidx.appcompat.widget.AppCompatCheckBox
@@ -40,6 +40,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_gravity="center_vertical"
                 android:orientation="vertical">
                 <TextView
                     android:id="@+id/cloth_name"
@@ -56,6 +57,7 @@
                     android:text="Special Cloth: NGN 200"
                     android:textSize="14sp"
                     android:textStyle="bold"
+                    android:visibility="visible"
                     android:layout_gravity="center_vertical"
                     />
 
@@ -68,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:visibility="invisible"
+                android:layout_gravity="center_vertical"
 
                 >
 

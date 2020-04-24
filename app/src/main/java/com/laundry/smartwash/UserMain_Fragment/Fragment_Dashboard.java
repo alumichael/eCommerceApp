@@ -37,6 +37,8 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.snackbar.Snackbar;
 import com.laundry.smartwash.Constant;
+import com.laundry.smartwash.Model.Banner.BannerGetData;
+import com.laundry.smartwash.Model.Banner.BannerGetObj;
 import com.laundry.smartwash.Model.Category.CategoryGetData;
 import com.laundry.smartwash.Model.Category.CategoryGetObj;
 import com.laundry.smartwash.Model.Errors.APIError;
@@ -105,6 +107,7 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
 
     private CardAdapter cardAdapter;
     private List<CategoryGetData> ServiceList;
+    private List<BannerGetData> bannerList;
     UserPreferences userPreferences;
     Fragment fragment;
 
@@ -117,7 +120,10 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
     TextView mLocationNote;
 
     @BindView(R.id.check_status)
-    TextView mCheckStatus;
+    MaterialCardView mCheckStatus;
+
+    @BindView(R.id.make_order)
+    MaterialCardView mMakeOrder;
 
     @BindView(R.id.location_notify)
     MaterialCardView mLocationNotify;
@@ -195,7 +201,6 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
 
         setAction();
 
-        SLide();
 
         mLocationNotifyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,60 +218,15 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
     private void setAction() {
         mCheckStatus.setOnClickListener(this);
         fund_wallet_ServiceCard.setOnClickListener(this);
+        mMakeOrder.setOnClickListener(this);
     }
 
-   /* private void setWallet_balance() {
-        //get client and call object for request
-        progressbar.setVisibility(View.VISIBLE);
-        wallet_kobo.setVisibility(View.GONE);
-        Call<fetchWallet> call = client.fetch_wallet(userPreferences.getCustomerId());
-        call.enqueue(new Callback<fetchWallet>() {
-            @Override
-            public void onResponse(Call<fetchWallet> call, Response<fetchWallet> response) {
-
-                if (!response.isSuccessful()) {
-                    try {
-                        APIError apiError = ErrorUtils.parseError(response);
-
-                        showMessage("Fetch Failed: " + apiError.getErrors());
-                        Log.i("Invalid Fetch", String.valueOf(apiError.getErrors()));
-                        //Log.i("Invalid Entry", response.errorBody().toString());
-                        progressbar.setVisibility(View.GONE);
-
-                    } catch (Exception e) {
-                        Log.i("Fetch Failed", e.getMessage());
-                        showMessage("Fetch Failed");
-                        progressbar.setVisibility(View.GONE);
-
-                    }
-
-                    return;
-                }
-
-              balance = response.body().fetchGetData().getAmount();
-                wallet_balance.setText(balance);
-                wallet_kobo.setVisibility(View.VISIBLE);
-                progressbar.setVisibility(View.GONE);
-
-            }
-
-            @Override
-            public void onFailure(Call<fetchWallet> call, Throwable t) {
-                showMessage("Fetch failed, check your internet " + t.getMessage());
-                Log.i("GEtError", t.getMessage());
-            }
-        });
-
-    }
-
-*/
 
 
     private void getServices() {
         avi1.setVisibility(View.VISIBLE);
         main_layout.setVisibility(View.GONE);
-
-
+        recyclerView.setVisibility(View.GONE);
         if (networkConnection.isNetworkConnected(getContext())) {
             //get client and call object for request
 
@@ -279,16 +239,16 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
                         try {
                             APIError apiError = ErrorUtils.parseError(response);
 
-                            showMessage("Fetch Failed: " + apiError.getErrors());
+                            ErrorAlert("Fetch Failed: Check your network");
                             Log.i("Invalid Fetch", String.valueOf(apiError.getErrors()));
                             //Log.i("Invalid Entry", response.errorBody().toString());
-                            avi1.setVisibility(View.VISIBLE);
+                            avi1.setVisibility(View.GONE);
                             main_layout.setVisibility(View.GONE);
 
                         } catch (Exception e) {
                             Log.i("Fetch Failed", e.getMessage());
-                            showMessage("Fetch Failed");
-                            avi1.setVisibility(View.VISIBLE);
+                            ErrorAlert("Fetch Failed: Check your network");
+                            avi1.setVisibility(View.GONE);
                             main_layout.setVisibility(View.GONE);
 
                         }
@@ -303,21 +263,14 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
 
 
                     if (count == 0) {
-                        showMessage("Service unavailable for the moment");
-                        avi1.setVisibility(View.VISIBLE);
+                        ErrorAlert("Service unavailable for the moment");
+                        avi1.setVisibility(View.GONE);
                         main_layout.setVisibility(View.GONE);
 
                     } else {
-                        avi1.setVisibility(View.GONE);
-                        main_layout.setVisibility(View.VISIBLE);
 
-                        cardAdapter = new CardAdapter(getContext(), ServiceList);
-                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity().getBaseContext(), RecyclerView.VERTICAL, false);
-                        recyclerView.setLayoutManager(linearLayoutManager);
-                        recyclerView.setItemAnimator(new DefaultItemAnimator());
-                        recyclerView.setAdapter(cardAdapter);
-
-
+                        list();
+                        getBanner();
 
                     }
 
@@ -326,69 +279,134 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
 
                 @Override
                 public void onFailure(Call<CategoryGetObj> call, Throwable t) {
-                    showMessage("Fetch failed, check your internet " + t.getMessage());
+                    ErrorAlert("Fetch Failed: Check your network");
                     Log.i("GEtError", t.getMessage());
-                    avi1.setVisibility(View.VISIBLE);
+                    avi1.setVisibility(View.GONE);
                     main_layout.setVisibility(View.GONE);
                 }
             });
 
         }else{
-            showMessage("No Internet connection discovered!");
-            avi1.setVisibility(View.VISIBLE);
+            ErrorAlert("No Internet connection discovered!");
+            avi1.setVisibility(View.GONE);
             main_layout.setVisibility(View.GONE);
         }
 
 
     }
 
+
+    private void getBanner() {
+        avi1.setVisibility(View.VISIBLE);
+        main_layout.setVisibility(View.GONE);
+
+        if (networkConnection.isNetworkConnected(getContext())) {
+            //get client and call object for request
+
+            Call<BannerGetObj> call = client.fetch_banner();
+            call.enqueue(new Callback<BannerGetObj>() {
+                @Override
+                public void onResponse(Call<BannerGetObj> call, Response<BannerGetObj> response) {
+
+                    if (!response.isSuccessful()) {
+                        try {
+                            APIError apiError = ErrorUtils.parseError(response);
+
+                            ErrorAlert("Fetch Failed: Check your network");
+                            Log.i("Invalid Fetch", String.valueOf(apiError.getErrors()));
+                            //Log.i("Invalid Entry", response.errorBody().toString());
+                            avi1.setVisibility(View.GONE);
+                            main_layout.setVisibility(View.GONE);
+
+                        } catch (Exception e) {
+                            Log.i("Fetch Failed", e.getMessage());
+                            ErrorAlert("Fetch Failed: Check your network");
+                            avi1.setVisibility(View.GONE);
+                            main_layout.setVisibility(View.GONE);
+
+                        }
+
+                        return;
+                    }
+
+                    bannerList = response.body().getData();
+
+
+                    int count = bannerList.size();
+
+                    if (count == 0) {
+
+                        mSlider.setVisibility(View.GONE);
+
+                    } else {
+
+                        for (int i=0; i<count ;i++){
+                            SLide(bannerList.get(i).getBannerUrl());
+                        }
+
+
+                    }
+
+                }
+
+
+                @Override
+                public void onFailure(Call<BannerGetObj> call, Throwable t) {
+                    ErrorAlert("Fetch Failed: Check your network");
+                    Log.i("GEtError", t.getMessage());
+                    avi1.setVisibility(View.GONE);
+                    main_layout.setVisibility(View.GONE);
+                }
+            });
+
+        }else{
+            ErrorAlert("No Internet connection discovered!");
+            avi1.setVisibility(View.GONE);
+            main_layout.setVisibility(View.GONE);
+        }
+
+
+    }
+    
+    
+    
+    
+
     @SuppressLint("CheckResult")
-    private void SLide(){
+    private void SLide(String banner_url){
 
-        ArrayList<Integer> listImage = new ArrayList<>();
-        ArrayList<String> listName = new ArrayList<>();
+        avi1.setVisibility(View.GONE);
+        main_layout.setVisibility(View.VISIBLE);
 
-        listImage.add(R.drawable.executive);
-        listName.add("Executive Service");
 
-        listImage.add(R.drawable.express);
-        listName.add("Express Service");
+        ArrayList<String> listUrl = new ArrayList<>();
 
-        listImage.add(R.drawable.family);
-        listName.add("Family Service");
-
-        listImage.add(R.drawable.general);
-        listName.add("General Service");
-
-        listImage.add(R.drawable.soap);
-        listName.add("SmartWash Liquid Soap");
+        listUrl.add(banner_url);
 
         RequestOptions requestOptions = new RequestOptions();
         requestOptions.fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .error(R.drawable.img_empty);
-        //.placeholder(R.drawable.placeholder)
+                .error(R.drawable.img_empty)
+                .placeholder(R.drawable.img_empty);
 
 
-        for (int i = 0; i < listImage.size(); i++) {
+        for (int i = 0; i < listUrl.size(); i++) {
             TextSliderView sliderView = new TextSliderView(getContext());
             // initialize SliderLayout
             sliderView
-                    .image(listImage.get(i))
-                    .description(listName.get(i))
+                    .image(listUrl.get(i))
                     .setScaleType(BaseSliderView.ScaleType.CenterCrop)
                     .setOnSliderClickListener(this);
 
             //add your extra information
             sliderView.bundle(new Bundle());
-            sliderView.getBundle().putString("extra", listName.get(i));
+            sliderView.getBundle().putString("extra", listUrl.get(i));
             mSlider.addSlider(sliderView);
         }
 
         // set Slider Transition Animation
         // mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Default);
         mSlider.setPresetTransformer(SliderLayout.Transformer.FlipHorizontal);
-
         mSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mSlider.setCustomAnimation(new DescriptionAnimation());
         mSlider.setDuration(4000);
@@ -397,13 +415,21 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
     }
 
 
+    private  void list(){
 
+        cardAdapter = new CardAdapter(getContext(), ServiceList);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(cardAdapter);
+
+
+    }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fund_wallet_card:
-
                 fragment = new Fragment_FundWallet();
                 showFragment(fragment);
 
@@ -411,7 +437,11 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
             case R.id.check_status:
                 fragment = new Fragment_Status();
                 showFragment(fragment);
+                break;
 
+            case R.id.make_order:
+                recyclerView.setVisibility(View.VISIBLE);
+                showMessage("Check below for available services");
                 break;
         }
     }
@@ -456,6 +486,33 @@ public class Fragment_Dashboard extends Fragment implements BaseSliderView.OnSli
     public void onSliderClick(BaseSliderView slider) {
 
     }
+
+    private void ErrorAlert(String message) {
+
+        new AlertDialog.Builder(getContext())
+                .setTitle("Error ")
+                .setIcon(R.drawable.ic_error_outline_black_24dp)
+                .setMessage(message)
+                .setPositiveButton("Try-Again", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+                        getServices();
+
+                    }
+                })
+
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int i) {
+                        dialog.dismiss();
+
+                    }
+                })
+                .show();
+
+    }
+
 
 
 }

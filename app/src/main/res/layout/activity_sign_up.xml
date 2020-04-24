@@ -60,7 +60,7 @@
                 android:text="Registration"
                 android:fontFamily="@font/nunito_semibold"
                 android:textSize="20sp"
-                android:textColor="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_marginRight="@dimen/size_two"
                 android:layout_marginLeft="@dimen/size_eight" />
 
@@ -77,11 +77,11 @@
                     android:id="@+id/fullname_editxt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawableStart="@drawable/ic_person_black_24dp"
+                    android:drawableStart="@drawable/ic_person_green_24dp"
                     android:hint="Full Name"
                     android:inputType="textPersonName"
                     android:fontFamily="@font/nunito_regular"
-                    android:drawableLeft="@drawable/ic_person_black_24dp" />
+                    android:drawableLeft="@drawable/ic_person_green_24dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -100,6 +100,7 @@
                     android:drawableStart="@drawable/ic_phone_in_talk_black_24dp"
                     android:hint="Phone number"
                     android:inputType="number"
+                    android:importantForAutofill="no"
                     android:fontFamily="@font/nunito_regular"
                     android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -116,11 +117,13 @@
                     android:id="@+id/addr_editxt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:drawableStart="@drawable/ic_phone_in_talk_black_24dp"
+                    android:drawableStart="@drawable/ic_location_on_black_24dp"
                     android:hint="Address"
                     android:inputType="text"
+                    android:importantForAutofill="no"
+                    android:drawableTint="@color/colorPrimary"
                     android:fontFamily="@font/nunito_regular"
-                    android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp" />
+                    android:drawableLeft="@drawable/ic_location_on_black_24dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -140,6 +143,7 @@
                     android:layout_height="match_parent"
                     android:drawableStart="@drawable/ic_email_black_24dp"
                     android:hint="Email"
+                    android:importantForAutofill="no"
                     android:drawableTint="@color/colorPrimary"
                     android:inputType="textEmailAddress"
                     android:fontFamily="@font/nunito_regular"
@@ -163,8 +167,8 @@
                     android:drawableStart="@drawable/ic_vpn_key_black_24dp"
                     android:hint="Password (at least 6 characters)"
                     android:fontFamily="@font/nunito_regular"
-                    android:drawableTint="@color/colorPrimary"
                     android:inputType="textPassword"
+                    android:importantForAutofill="no"
                     android:drawableLeft="@drawable/ic_vpn_key_black_24dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -185,8 +189,8 @@
                     android:drawableStart="@drawable/ic_vpn_key_black_24dp"
                     android:hint="Confirm Password (at least 6 characters)"
                     android:fontFamily="@font/nunito_regular"
-                    android:drawableTint="@color/colorPrimary"
                     android:inputType="textPassword"
+                    android:importantForAutofill="no"
                     android:drawableLeft="@drawable/ic_vpn_key_black_24dp" />
             </com.google.android.material.textfield.TextInputLayout>
 

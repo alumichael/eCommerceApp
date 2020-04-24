@@ -14,9 +14,19 @@ public class CategoryGetData implements Serializable
     @SerializedName("cate_name")
     @Expose
     private String cateName;
+
+    @SerializedName("cate_desc")
+    @Expose
+    private String cateDesc;
+
+    @SerializedName("cate_min_price")
+    @Expose
+    private String cateMinPrice;
+
     @SerializedName("cate_price")
     @Expose
     private String catePrice;
+
 
     public String getCateId() {
         return cateId;
@@ -28,6 +38,13 @@ public class CategoryGetData implements Serializable
         return cateName;
     }
 
+    public String getCateDesc() {
+        return cateDesc;
+    }
+
+    public String getCateMinPrice() {
+        return cateMinPrice;
+    }
 
 
     public String getCatePrice() {

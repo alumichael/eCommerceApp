@@ -101,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         userPreferences = new UserPreferences(this);
 
+       // showMessage(userPreferences.getCustomerId());
+
         mPermissionCheckClass = new PermissionCheckClass(this);
         if (!mPermissionCheckClass.checkPermission()){
             mPermissionCheckClass.requestPermission();
@@ -186,8 +188,8 @@ public class MainActivity extends AppCompatActivity {
             Intent sharingIntent = new Intent(Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
 
-            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, "SmartWash Mobile");
-            sharingIntent.putExtra(Intent.EXTRA_TEXT, "We make it clean!");
+            sharingIntent.putExtra(Intent.EXTRA_SUBJECT, " Download SmartWash Mobile");
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, "http://play.google.com/store/apps/details?id=com.laundry.smartwash");
 
             startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
@@ -199,14 +201,13 @@ public class MainActivity extends AppCompatActivity {
 
             return true;
         }
-
-
-       /* else if (itemId == R.id.action_email_us) {
+        /* else if (itemId == R.id.action_email_us) {
             applyToolbarChildren("Email Us", "keep us informed");
             fragment = new EmailUsFragment();
             showFragment(fragment);
             return true;
         }*/else if (itemId == R.id.action_logout) {
+            userPreferences.setFirstTimeLaunch(true);
             finish();
             return true;
         }
@@ -215,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goPlayStore() {
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/"));
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://play.google.com/store/apps/details?id=com.laundry.smartwash"));
         startActivity(intent);
     }
 

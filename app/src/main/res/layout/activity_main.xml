@@ -20,6 +20,7 @@
         app:popupTheme="@style/MyPopupTheme"
         android:theme="@style/MyToolBarTheme"
         app:titleTextColor="@color/colorAccent"
+        app:contentInsetStartWithNavigation="0dp"
         app:titleTextAppearance="@style/Toolbar.TitleText"
         app:title="@string/app_name">
 

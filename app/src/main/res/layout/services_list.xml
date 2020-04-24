@@ -41,7 +41,6 @@
                 android:alpha="0.9"
                 android:background="@color/colorPrimary"
                 android:gravity="bottom"
-                android:padding="4dp"
                 android:orientation="vertical" >
 
                 <TextView
@@ -51,14 +50,17 @@
                     android:text="Executive Service"
                     android:textSize="21sp"
                     android:textColor="@color/colorWhite"
-                    android:fontFamily="@font/nunito_bold"/>
+                    android:fontFamily="@font/nunito_bold"
+                    android:layout_marginStart="@dimen/size_eight"
+                    android:layout_marginLeft="@dimen/size_eight" />
 
 
                 <TextView
                     android:id="@+id/product_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
+                    android:layout_marginStart="@dimen/size_eight"
+                    android:layout_marginLeft="@dimen/size_eight"
                     android:fontFamily="@font/nunito_semibold"
                     android:text="#200 per Cloth"
                     android:textColor="@color/colorAccent"
@@ -68,7 +70,10 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="end"
-                    app:srcCompat="@drawable/ic_chevron_right_black_24dp"/>
+                    app:srcCompat="@drawable/ic_chevron_right_black_24dp"
+                    android:layout_marginEnd="@dimen/size_eight"
+                    android:layout_marginRight="@dimen/size_eight"
+                    android:layout_marginBottom="@dimen/size_eight"/>
             </LinearLayout>
 
 
@@ -82,7 +87,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:padding="8dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="8dp"
+        android:layout_marginStart="@dimen/size_eight"
+        android:layout_marginLeft="@dimen/size_eight"
+        android:layout_marginEnd="@dimen/size_eight"
+        android:justificationMode="inter_word"
         android:text="@string/executive_dsc"
         android:textSize="15sp"
         android:textColor="@color/colorDarkerGrey"
@@ -93,6 +103,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/colorDarkerGrey"
+        android:layout_marginStart="@dimen/size_eight"
+        android:layout_marginLeft="@dimen/size_eight"
+        android:layout_marginEnd="@dimen/size_eight"
         />
 
 

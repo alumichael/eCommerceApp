@@ -18,7 +18,7 @@
         android:elevation="4dp"
         android:theme="@style/MyToolBarTheme"
         app:titleTextAppearance="@style/Toolbar.TitleText"
-        app:titleTextColor="@color/colorWhite"
+        app:contentInsetStartWithNavigation="0dp"
         app:title="Payment">
 
 

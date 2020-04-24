@@ -49,18 +49,10 @@ public class Splash extends AppCompatActivity {
         }
 
 //      Create instance of Preference class
-        //UserPreferences userPreferences = new UserPreferences(this);
+        UserPreferences userPreferences = new UserPreferences(this);
 
-//        Display app version on the Screen
-       /* try{
-            PackageInfo packageInfo = getApplicationContext().getPackageManager().getPackageInfo(getPackageName(), 0);
-            String version = "v" + packageInfo.versionName;
-            txtVersion.setText(version);
-        }catch (PackageManager.NameNotFoundException e){
-            e.printStackTrace();
-        }*/
-
-//        check for first time launch
+        //i removed ! just to test, i will replace back
+        if (userPreferences.isFirstTimeLaunch()) {
 
             // load the animation
             slide_front_left = AnimationUtils.loadAnimation(getApplicationContext(),
@@ -73,18 +65,42 @@ public class Splash extends AppCompatActivity {
             imgLogo.startAnimation(slide_front_left);
 
             txtDesc.startAnimation(blink);
-            //txtVersion.startAnimation(blink);
 
-
-
-            Thread myThread = new Thread(){
+            Thread myThread = new Thread() {
                 @Override
                 public void run() {
                     try {
-                        sleep(3000);
+                        sleep(1500);
+                        userPreferences.setFirstTimeLaunch(false);
+                        startActivity(new Intent(getApplicationContext(), WelcomeSlideActivity.class));
+                        finish();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            };
+            myThread.start();
+        }else{
 
-                        //Go to SignIN
-                        startActivity(new Intent(getApplicationContext(),WelcomeSlideActivity.class));
+            // load the animation
+            slide_front_left = AnimationUtils.loadAnimation(getApplicationContext(),
+                    R.anim.slide_from_left);
+
+            blink = AnimationUtils.loadAnimation(getApplicationContext(),
+                    R.anim.blink);
+
+            //start animation
+            imgLogo.startAnimation(slide_front_left);
+
+            txtDesc.startAnimation(blink);
+
+            Thread myThread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        sleep(1500);
+
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         finish();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -93,6 +109,9 @@ public class Splash extends AppCompatActivity {
             };
             myThread.start();
 
+
+
+        }
     }
 
 

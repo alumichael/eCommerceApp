@@ -17,6 +17,7 @@ public class Constant {
     public static final String WALLET_DESC = "fund_desc";
     public static final String CATE_NAME= "cate_name";
     public static final String CATE_PRICE= "cate_price";
+    public static final String CATE_MIN_PRICE= "cate_min_price";
 
     public static String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
     public static String IS_SENT_SUCCESS = "IsSentSuccess";

@@ -196,7 +196,7 @@ public class Fragment_Status extends Fragment implements SwipeRefreshLayout.OnRe
 
 
     private void getOrderStatus(){
-
+        notFoundLayout.setVisibility(View.GONE);
         //get client and call object for request
         Call<OrderStatusHead> call=client.fetch_order_status(new OnlyIDRequest(userPreferences.getCustomerId()));
         call.enqueue(new Callback<OrderStatusHead>() {

@@ -77,6 +77,8 @@ public class ProfileFragment extends Fragment {
     TextView mEmail;
     @BindView(R.id.phone_num)
     TextView mPhoneNum;
+    @BindView(R.id.role_txt)
+    TextView mRoletxt;
     @BindView(R.id.address_txt)
     TextView mAddressTxt;
     
@@ -646,6 +648,7 @@ public class ProfileFragment extends Fragment {
         mEmail.setText("Email: "+userPreferences.getUserEmail());
         mPhoneNum.setText("Phone No: "+userPreferences.getPhone());
         mAddressTxt.setText("Address: "+userPreferences.getUserAddr1());
+        mRoletxt.setText("Role: "+userPreferences.getRole());
 
        // mProgressBarProfile.setVisibility(View.VISIBLE);
 
